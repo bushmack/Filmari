@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "dgSpecHash": "eaDJnMeOMXU=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Academy\\source\\repos\\фильмари\\OneButtonApp\\OneButtonApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.net.illink.analyzers\\7.0.100-1.23401.1\\microsoft.net.illink.analyzers.7.0.100-1.23401.1.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.net.illink.tasks\\7.0.100-1.23401.1\\microsoft.net.illink.tasks.7.0.100-1.23401.1.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\6.0.32\\microsoft.windowsdesktop.app.ref.6.0.32.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.netcore.app.ref\\6.0.32\\microsoft.netcore.app.ref.6.0.32.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\6.0.32\\microsoft.aspnetcore.app.runtime.win-x64.6.0.32.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\6.0.32\\microsoft.windowsdesktop.app.runtime.win-x64.6.0.32.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\6.0.32\\microsoft.aspnetcore.app.ref.6.0.32.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\6.0.32\\microsoft.netcore.app.host.win-x64.6.0.32.nupkg.sha512",
+    "C:\\Users\\Academy\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\6.0.32\\microsoft.netcore.app.runtime.win-x64.6.0.32.nupkg.sha512"
+  ],
+  "logs": []
+}
