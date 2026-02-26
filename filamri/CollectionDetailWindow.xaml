@@ -1,0 +1,115 @@
+﻿<Window x:Class="filamri.CollectionDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Фильмы в подборке" Height="700" Width="1000"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFF5F5F5"
+        WindowStyle="ToolWindow">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" Margin="0,0,0,20">
+            <Button Content="← Назад к подборкам" 
+                    Width="150" 
+                    Height="35"
+                    Margin="0,0,20,0"
+                    Click="BackButton_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#FF6C757D"/>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+            </Button>
+            <TextBlock x:Name="CollectionTitle" 
+                       FontSize="28" FontWeight="Bold" 
+                       VerticalAlignment="Center">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="#FF107C10"/>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+            <ItemsControl x:Name="MoviesList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" 
+                                BorderBrush="#FFDDDDDD" 
+                                BorderThickness="1" 
+                                CornerRadius="8" 
+                                Margin="0,0,0,10"
+                                Padding="15"
+                                Cursor="Hand"
+                                MouseLeftButtonUp="Border_MouseLeftButtonUp"
+                                Tag="{Binding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Постер -->
+                                <Image Grid.Column="0" 
+                                       Source="{Binding PosterUrl}" 
+                                       Height="120" 
+                                       Width="80" 
+                                       Stretch="Uniform"
+                                       Margin="0,0,15,0"/>
+
+                                <!-- Информация о фильме -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Name}" 
+                                               FontSize="18" 
+                                               FontWeight="Bold"
+                                               Margin="0,0,0,5"/>
+                                    <WrapPanel>
+                                        <TextBlock Text="{Binding Year}" 
+                                                   FontSize="14" 
+                                                   Foreground="Gray"
+                                                   Margin="0,0,10,0"/>
+                                        <TextBlock Text="{Binding Genre}" 
+                                                   FontSize="14" 
+                                                   Foreground="Gray"/>
+                                        <TextBlock Text="{Binding Rating, StringFormat=★ {0:F1}}" 
+                                                   FontSize="14" 
+                                                   Foreground="Gold"
+                                                   Margin="10,0,0,0"/>
+                                    </WrapPanel>
+                                    <TextBlock Text="{Binding Description}" 
+                                               FontSize="12" 
+                                               Foreground="Gray"
+                                               TextWrapping="Wrap"
+                                               MaxHeight="60"
+                                               Margin="0,5,0,0"/>
+                                </StackPanel>
+
+                                <!-- Кнопка удаления -->
+                                <Button Grid.Column="2" 
+                                        Content="❌" 
+                                        Width="35" 
+                                        Height="35"
+                                        FontSize="16"
+                                        Tag="{Binding}"
+                                        Click="RemoveFromCollection_Click"
+                                        ToolTip="Удалить из подборки">
+                                    <Button.Background>
+                                        <SolidColorBrush Color="#FFDC3545"/>
+                                    </Button.Background>
+                                    <Button.Foreground>
+                                        <SolidColorBrush Color="White"/>
+                                    </Button.Foreground>
+                                </Button>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>

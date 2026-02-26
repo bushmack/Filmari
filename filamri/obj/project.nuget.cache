@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "NQ0LPV7z0rg=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\xlopo\\source\\repos\\filamri\\filamri\\filamri.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\xlopo\\.nuget\\packages\\system.net.http.json\\8.0.0\\system.net.http.json.8.0.0.nupkg.sha512",
+    "C:\\Users\\xlopo\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\xlopo\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

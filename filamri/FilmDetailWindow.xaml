@@ -1,0 +1,140 @@
+﻿<Window x:Class="filamri.FilmDetailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Просмотр фильма" Height="750" Width="900"
+        WindowStartupLocation="CenterOwner"
+        Background="#FFF5F5F5"
+        WindowStyle="ToolWindow"
+        ResizeMode="NoResize">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
+            <Button x:Name="BackButton" Content="← Назад к списку" 
+                    Width="150" Height="40" Margin="5" Click="BackToList_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#FF6C757D"/>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+            </Button>
+
+            <Button x:Name="PrevButton" Content="◀ Предыдущий" 
+                    Width="150" Height="40" Margin="5" Click="PreviousFilm_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#FF0078D7"/>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+            </Button>
+
+            <TextBlock x:Name="NavigationText" 
+                       FontSize="16" 
+                       VerticalAlignment="Center"
+                       Margin="10,0"
+                       Padding="5"/>
+
+            <Button x:Name="NextButton" Content="Следующий ▶" 
+                    Width="150" Height="40" Margin="5" Click="NextFilm_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#FF0078D7"/>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+            </Button>
+        </StackPanel>
+
+        <Border Grid.Row="1" 
+                Background="White" 
+                BorderBrush="#FFDDDDDD" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
+                        BorderBrush="#FFDDDDDD" BorderThickness="1" CornerRadius="5"
+                        Margin="0,0,20,0" Padding="5">
+                    <Image x:Name="PosterImage" 
+                           Height="400" 
+                           Width="280" 
+                           Stretch="Uniform"
+                           HorizontalAlignment="Center"/>
+                </Border>
+
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,15">
+                    <TextBlock x:Name="TitleText" 
+                               FontSize="32" 
+                               FontWeight="Bold" 
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,10"/>
+
+                    <WrapPanel Margin="0,0,0,10">
+                        <TextBlock x:Name="YearText" 
+                                   FontSize="18" 
+                                   Foreground="Gray"
+                                   Margin="0,0,15,0"/>
+                        <TextBlock x:Name="GenreText" 
+                                   FontSize="18" 
+                                   Foreground="Gray"
+                                   Margin="0,0,15,0"/>
+                        <TextBlock x:Name="RatingText" 
+                                   FontSize="18" 
+                                   Foreground="Gold"
+                                   FontWeight="Bold"/>
+                    </WrapPanel>
+
+                    <TextBlock x:Name="CountryText" 
+                               FontSize="16" 
+                               Foreground="Gray"
+                               Margin="0,0,0,10"/>
+
+                    <TextBlock x:Name="ActorsText" 
+                               FontSize="16" 
+                               Foreground="Blue"
+                               TextWrapping="Wrap"
+                               Margin="0,0,0,15"/>
+                </StackPanel>
+
+                <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto">
+                    <TextBlock x:Name="DescriptionText" 
+                               FontSize="16" 
+                               TextWrapping="Wrap"
+                               LineHeight="25"/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
+            <Button x:Name="AddToCollectionButton"
+                    Content="📥 Добавить в подборку" 
+                    Width="200" 
+                    Height="45" 
+                    FontSize="16"
+                    Click="AddToCollection_Click">
+                <Button.Background>
+                    <SolidColorBrush Color="#FF107C10"/>
+                </Button.Background>
+                <Button.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </Button.Foreground>
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>
