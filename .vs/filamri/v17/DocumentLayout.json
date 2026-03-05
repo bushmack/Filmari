@@ -1,0 +1,186 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "D:\\weather\\Filmari\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\views\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\views\\moviematchwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\moviematchwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\views\\filmcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\filmcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\views\\filmcontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\filmcontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\models\\film.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\models\\film.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\dialogs\\filterdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\dialogs\\filterdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\dialogs\\filterdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\dialogs\\filterdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|d:\\weather\\filmari\\filamri\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "filamri\\MainWindow.xaml",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\MainWindow.xaml",
+              "RelativeToolTip": "filamri\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-05T10:47:30.694Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MovieMatchWindow.xaml.cs",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml.cs",
+              "RelativeDocumentMoniker": "filamri\\Views\\MovieMatchWindow.xaml.cs",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml.cs",
+              "RelativeToolTip": "filamri\\Views\\MovieMatchWindow.xaml.cs",
+              "ViewState": "AQIAACMBAAAAAAAAAAAQwEcBAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-05T10:46:32.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MovieMatchWindow.xaml",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml",
+              "RelativeDocumentMoniker": "filamri\\Views\\MovieMatchWindow.xaml",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml",
+              "RelativeToolTip": "filamri\\Views\\MovieMatchWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-05T10:46:05.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FilmControl.xaml.cs",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Views\\FilmControl.xaml.cs",
+              "RelativeDocumentMoniker": "filamri\\Views\\FilmControl.xaml.cs",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Views\\FilmControl.xaml.cs",
+              "RelativeToolTip": "filamri\\Views\\FilmControl.xaml.cs",
+              "ViewState": "AQIAABcAAAAAAAAAAAAAAEMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-05T10:27:43.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FilmControl.xaml",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Views\\FilmControl.xaml",
+              "RelativeDocumentMoniker": "filamri\\Views\\FilmControl.xaml",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Views\\FilmControl.xaml",
+              "RelativeToolTip": "filamri\\Views\\FilmControl.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-05T10:27:30.909Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Film.cs",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Models\\Film.cs",
+              "RelativeDocumentMoniker": "filamri\\Models\\Film.cs",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Models\\Film.cs",
+              "RelativeToolTip": "filamri\\Models\\Film.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-05T10:26:56.522Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ApiService.cs",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Services\\ApiService.cs",
+              "RelativeDocumentMoniker": "filamri\\Services\\ApiService.cs",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Services\\ApiService.cs",
+              "RelativeToolTip": "filamri\\Services\\ApiService.cs",
+              "ViewState": "AQIAAHQAAAAAAAAAAAA8wJgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-05T07:40:24.742Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "filamri\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\MainWindow.xaml.cs",
+              "RelativeToolTip": "filamri\\MainWindow.xaml.cs",
+              "ViewState": "AQIAAIAAAAAAAAAAAAAwwJ0AAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T10:01:24.544Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "FilterDialog.xaml.cs",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml.cs",
+              "RelativeDocumentMoniker": "filamri\\Dialogs\\FilterDialog.xaml.cs",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml.cs",
+              "RelativeToolTip": "filamri\\Dialogs\\FilterDialog.xaml.cs",
+              "ViewState": "AQIAAG0BAAAAAAAAAAAAAJkBAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-04T10:01:03.321Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "FilterDialog.xaml",
+              "DocumentMoniker": "D:\\weather\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml",
+              "RelativeDocumentMoniker": "filamri\\Dialogs\\FilterDialog.xaml",
+              "ToolTip": "D:\\weather\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml",
+              "RelativeToolTip": "filamri\\Dialogs\\FilterDialog.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-04T10:00:28.212Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

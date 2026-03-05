@@ -32,5 +32,13 @@
     <Compile Update="Views\FilmControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\MovieMatchWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Views\MovieMatchWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
 </Project>

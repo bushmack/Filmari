@@ -13,22 +13,55 @@ namespace filamri.Views
             InitializeComponent();
 
             TitleText.Text = film.Name;
-            DescriptionText.Text = film.Description;
+            DescriptionText.Text = film.Description ?? "Описание отсутствует";
             YearText.Text = film.Year?.ToString() ?? "";
-            GenreText.Text = film.Genre ?? "";
+
+            // ОТОБРАЖАЕМ ВСЕ ЖАНРЫ
+            if (!string.IsNullOrEmpty(film.GenresString))
+            {
+                GenreText.Text = film.GenresString;
+            }
+            else if (film.AllGenres != null && film.AllGenres.Count > 0)
+            {
+                GenreText.Text = string.Join(", ", film.AllGenres);
+            }
+            else
+            {
+                GenreText.Text = film.Genre ?? "";
+            }
+
             RatingText.Text = film.Rating.HasValue ? $"★ {film.Rating:F1}" : "";
-            CountryText.Text = film.Country ?? "";
-            ActorsText.Text = film.Actors != null && film.Actors.Count > 0
-                ? $"Актеры: {string.Join(", ", film.Actors.Take(3))}"
-                : "";
+
+            // Отображаем актеров
+            if (film.Actors != null && film.Actors.Count > 0)
+            {
+                var actorsToShow = film.Actors.Take(5).ToList();
+                ActorsText.Text = $"Актеры: {string.Join(", ", actorsToShow)}";
+                if (film.Actors.Count > 5)
+                {
+                    ActorsText.Text += $" и еще {film.Actors.Count - 5}";
+                }
+            }
+            else
+            {
+                ActorsText.Text = "";
+            }
 
             if (!string.IsNullOrEmpty(film.PosterUrl))
             {
                 try
                 {
-                    PosterImage.Source = new BitmapImage(new Uri(film.PosterUrl));
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(film.PosterUrl);
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    PosterImage.Source = bitmap;
                 }
-                catch { }
+                catch
+                {
+                    PosterImage.Source = null;
+                }
             }
         }
     }

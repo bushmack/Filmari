@@ -120,6 +120,17 @@ namespace filamri
             {
                 try
                 {
+                    ShowFilmContainer();
+
+                    var loadingText = new TextBlock
+                    {
+                        Text = "⚡ Поиск по фильтру...",
+                        FontSize = 18,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(50)
+                    };
+                    FilmContainer?.Children.Add(loadingText);
+
                     _movies = await _apiService.SearchByFilterAsync(
                         genre: dialog.Genre,
                         yearFrom: dialog.YearFrom,
@@ -129,7 +140,6 @@ namespace filamri
                         country: dialog.Country
                     );
                     _currentIndex = 0;
-                    ShowFilmContainer();
                     DisplayCurrentFilm();
                 }
                 catch (Exception ex)
@@ -142,9 +152,9 @@ namespace filamri
 
         private void CombinedSearch_Click(object sender, RoutedEventArgs e)
         {
-            var matchPage = new MovieMatchPage();
-            matchPage.ReturnToMain = () => ShowFilmContainer();
-            MainContent.Content = matchPage;
+            var matchWindow = new MovieMatchWindow();
+            matchWindow.Owner = this;
+            matchWindow.ShowDialog();
         }
 
         private void MyCollections_Click(object sender, RoutedEventArgs e)
