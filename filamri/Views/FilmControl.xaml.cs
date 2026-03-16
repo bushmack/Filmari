@@ -13,10 +13,13 @@ namespace filamri.Views
             InitializeComponent();
 
             TitleText.Text = film.Name;
+
+            // Полное описание (без обрезания)
             DescriptionText.Text = film.Description ?? "Описание отсутствует";
+
             YearText.Text = film.Year?.ToString() ?? "";
 
-            // ОТОБРАЖАЕМ ВСЕ ЖАНРЫ
+            // Все жанры полностью
             if (!string.IsNullOrEmpty(film.GenresString))
             {
                 GenreText.Text = film.GenresString;
@@ -31,21 +34,24 @@ namespace filamri.Views
             }
 
             RatingText.Text = film.Rating.HasValue ? $"★ {film.Rating:F1}" : "";
+            CountryText.Text = film.Country ?? "";
 
-            // Отображаем актеров
+            // Все актеры (первые 10)
             if (film.Actors != null && film.Actors.Count > 0)
             {
-                var actorsToShow = film.Actors.Take(5).ToList();
+                var actorsToShow = film.Actors.Take(10).ToList();
                 ActorsText.Text = $"Актеры: {string.Join(", ", actorsToShow)}";
-                if (film.Actors.Count > 5)
-                {
-                    ActorsText.Text += $" и еще {film.Actors.Count - 5}";
-                }
+                if (film.Actors.Count > 10)
+                    ActorsText.Text += $"\nи еще {film.Actors.Count - 10}";
             }
             else
             {
                 ActorsText.Text = "";
             }
+
+            LengthText.Text = film.MovieLength.HasValue && film.MovieLength > 0
+                ? $"{film.MovieLength} мин."
+                : "";
 
             if (!string.IsNullOrEmpty(film.PosterUrl))
             {

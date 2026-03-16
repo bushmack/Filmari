@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "CDGj12JbVzA=",
+  "dgSpecHash": "JmVGS8nUEY0=",
   "success": true,
-  "projectFilePath": "D:\\weather\\Filmari\\filamri\\filamri.csproj",
+  "projectFilePath": "C:\\Users\\егор\\Documents\\GitHub\\Filmari\\filamri\\filamri.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Academy\\.nuget\\packages\\system.net.http.json\\8.0.0\\system.net.http.json.8.0.0.nupkg.sha512",
-    "C:\\Users\\Academy\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
-    "C:\\Users\\Academy\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512"
+    "C:\\Users\\егор\\.nuget\\packages\\system.net.http.json\\8.0.0\\system.net.http.json.8.0.0.nupkg.sha512",
+    "C:\\Users\\егор\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512",
+    "C:\\Users\\егор\\.nuget\\packages\\system.text.json\\8.0.0\\system.text.json.8.0.0.nupkg.sha512"
   ],
   "logs": []
 }

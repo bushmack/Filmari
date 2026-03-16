@@ -1,11 +1,32 @@
 ﻿<Window x:Class="filamri.FilmDetailWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Просмотр фильма" Height="750" Width="900"
+        Title="Просмотр фильма" 
+        Height="850" 
+        Width="1200"
         WindowStartupLocation="CenterOwner"
         Background="#FFF5F5F5"
         WindowStyle="ToolWindow"
         ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="NavButtonStyle" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
 
     <Grid Margin="20">
         <Grid.RowDefinitions>
@@ -14,126 +35,156 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
+        <!-- Верхняя панель с навигацией -->
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,20">
-            <Button x:Name="BackButton" Content="← Назад к списку" 
-                    Width="150" Height="40" Margin="5" Click="BackToList_Click">
-                <Button.Background>
-                    <SolidColorBrush Color="#FF6C757D"/>
-                </Button.Background>
-                <Button.Foreground>
-                    <SolidColorBrush Color="White"/>
-                </Button.Foreground>
-            </Button>
+            <Button x:Name="BackButton" 
+                    Content="← Назад к списку" 
+                    Width="150" 
+                    Style="{StaticResource NavButtonStyle}"
+                    Margin="5"
+                    Click="BackToList_Click"
+                    Background="#FF6C757D" 
+                    Foreground="White"/>
 
-            <Button x:Name="PrevButton" Content="◀ Предыдущий" 
-                    Width="150" Height="40" Margin="5" Click="PreviousFilm_Click">
-                <Button.Background>
-                    <SolidColorBrush Color="#FF0078D7"/>
-                </Button.Background>
-                <Button.Foreground>
-                    <SolidColorBrush Color="White"/>
-                </Button.Foreground>
-            </Button>
+            <Button x:Name="PrevButton" 
+                    Content="◀ Предыдущий" 
+                    Width="150" 
+                    Style="{StaticResource NavButtonStyle}"
+                    Margin="5"
+                    Click="PreviousFilm_Click"
+                    Background="#FF0078D7" 
+                    Foreground="White"/>
 
             <TextBlock x:Name="NavigationText" 
                        FontSize="16" 
                        VerticalAlignment="Center"
-                       Margin="10,0"
+                       Margin="15,0"
                        Padding="5"/>
 
-            <Button x:Name="NextButton" Content="Следующий ▶" 
-                    Width="150" Height="40" Margin="5" Click="NextFilm_Click">
-                <Button.Background>
-                    <SolidColorBrush Color="#FF0078D7"/>
-                </Button.Background>
-                <Button.Foreground>
-                    <SolidColorBrush Color="White"/>
-                </Button.Foreground>
-            </Button>
+            <Button x:Name="NextButton" 
+                    Content="Следующий ▶" 
+                    Width="150" 
+                    Style="{StaticResource NavButtonStyle}"
+                    Margin="5"
+                    Click="NextFilm_Click"
+                    Background="#FF0078D7" 
+                    Foreground="White"/>
         </StackPanel>
 
+        <!-- Карточка фильма (полноэкранная) -->
         <Border Grid.Row="1" 
                 Background="White" 
                 BorderBrush="#FFDDDDDD" 
                 BorderThickness="1" 
-                CornerRadius="8" 
-                Padding="20">
+                CornerRadius="12" 
+                Padding="25">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300"/>
+                    <ColumnDefinition Width="350"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="2"
-                        BorderBrush="#FFDDDDDD" BorderThickness="1" CornerRadius="5"
-                        Margin="0,0,20,0" Padding="5">
+                <!-- Постер -->
+                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="3"
+                        BorderBrush="#FFDDDDDD" BorderThickness="1" CornerRadius="8"
+                        Margin="0,0,25,0" Padding="5"
+                        Background="#FFF9F9F9">
                     <Image x:Name="PosterImage" 
-                           Height="400" 
-                           Width="280" 
+                           Height="500" 
+                           Width="330" 
                            Stretch="Uniform"
                            HorizontalAlignment="Center"/>
                 </Border>
 
-                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,15">
+                <!-- Информация о фильме -->
+                <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,20">
                     <TextBlock x:Name="TitleText" 
-                               FontSize="32" 
+                               FontSize="40" 
                                FontWeight="Bold" 
                                TextWrapping="Wrap"
-                               Margin="0,0,0,10"/>
+                               Margin="0,0,0,20"
+                               LineHeight="46"/>
 
-                    <WrapPanel Margin="0,0,0,10">
+                    <WrapPanel Margin="0,5,0,20">
                         <TextBlock x:Name="YearText" 
-                                   FontSize="18" 
+                                   FontSize="22" 
                                    Foreground="Gray"
                                    Margin="0,0,15,0"/>
                         <TextBlock x:Name="GenreText" 
-                                   FontSize="18" 
+                                   FontSize="22" 
                                    Foreground="Gray"
-                                   Margin="0,0,15,0"/>
+                                   TextWrapping="Wrap"
+                                   MaxWidth="450"/>
                         <TextBlock x:Name="RatingText" 
-                                   FontSize="18" 
+                                   FontSize="22" 
                                    Foreground="Gold"
-                                   FontWeight="Bold"/>
+                                   FontWeight="Bold"
+                                   Margin="15,0,0,0"/>
                     </WrapPanel>
 
                     <TextBlock x:Name="CountryText" 
-                               FontSize="16" 
+                               FontSize="20" 
                                Foreground="Gray"
-                               Margin="0,0,0,10"/>
+                               Margin="0,5,0,5"/>
 
-                    <TextBlock x:Name="ActorsText" 
-                               FontSize="16" 
-                               Foreground="Blue"
-                               TextWrapping="Wrap"
-                               Margin="0,0,0,15"/>
+                    <TextBlock x:Name="LengthText" 
+                               FontSize="20" 
+                               Foreground="Gray"
+                               Margin="0,5,0,5"/>
+
+                    <TextBlock x:Name="AgeRatingText" 
+                               FontSize="20" 
+                               Foreground="Gray"
+                               Margin="0,5,0,5"/>
                 </StackPanel>
 
-                <ScrollViewer Grid.Row="1" Grid.Column="1" VerticalScrollBarVisibility="Auto">
-                    <TextBlock x:Name="DescriptionText" 
-                               FontSize="16" 
+                <!-- Актеры -->
+                <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+                    <TextBlock x:Name="ActorsText" 
+                               FontSize="20" 
+                               Foreground="#FF0078D7"
                                TextWrapping="Wrap"
-                               LineHeight="25"/>
+                               LineHeight="28"/>
+                </StackPanel>
+
+                <!-- Описание (с прокруткой) -->
+                <ScrollViewer Grid.Row="2" 
+                             Grid.Column="1" 
+                             VerticalScrollBarVisibility="Auto"
+                             HorizontalScrollBarVisibility="Disabled">
+                    <TextBlock x:Name="DescriptionText" 
+                               FontSize="18" 
+                               TextWrapping="Wrap"
+                               LineHeight="28"
+                               Margin="0,10,10,0"/>
                 </ScrollViewer>
             </Grid>
         </Border>
 
+        <!-- Кнопка удаления из подборки -->
         <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,20,0,0">
-            <Button x:Name="AddToCollectionButton"
-                    Content="📥 Добавить в подборку" 
+            <Button x:Name="RemoveFromCollectionButton"
+                    Content="❌ Удалить из подборки" 
                     Width="200" 
                     Height="45" 
                     FontSize="16"
-                    Click="AddToCollection_Click">
-                <Button.Background>
-                    <SolidColorBrush Color="#FF107C10"/>
-                </Button.Background>
-                <Button.Foreground>
-                    <SolidColorBrush Color="White"/>
-                </Button.Foreground>
+                    FontWeight="Bold"
+                    Background="#FFDC3545"
+                    Foreground="White"
+                    Click="RemoveFromCollection_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
             </Button>
         </StackPanel>
     </Grid>

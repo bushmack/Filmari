@@ -2,40 +2,71 @@
 using filamri.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 
 namespace filamri
 {
     public partial class FilmDetailWindow : Window
     {
-        private readonly ApiService _apiService = new();
+        private readonly ApiService _apiService;
         private List<Film> _allFilms;
         private int _currentIndex;
-        private bool _fromCollection; // Флаг, что окно открыто из подборки
+        private Collection _collection;
 
-        public FilmDetailWindow(Film film, List<Film> allFilms, bool fromCollection = false)
+        public FilmDetailWindow(Film film, List<Film> allFilms, Collection collection)
         {
             InitializeComponent();
+            _apiService = new ApiService();
             _allFilms = allFilms;
-            _fromCollection = fromCollection;
+            _collection = collection;
             _currentIndex = _allFilms.FindIndex(f => f.Id == film.Id);
             if (_currentIndex == -1) _currentIndex = 0;
-
             ShowFilm(_allFilms[_currentIndex]);
         }
 
         private void ShowFilm(Film film)
         {
             TitleText.Text = film.Name;
-            DescriptionText.Text = film.Description ?? "Описание отсутствует";
+
+            if (!string.IsNullOrEmpty(film.Description))
+                DescriptionText.Text = film.Description.Length > 250 ? film.Description.Substring(0, 250) + "..." : film.Description;
+            else
+                DescriptionText.Text = "Описание отсутствует";
+
             YearText.Text = film.Year?.ToString() ?? "";
-            GenreText.Text = film.Genre ?? "";
+
+            if (!string.IsNullOrEmpty(film.GenresString))
+                GenreText.Text = film.GenresString;
+            else if (film.AllGenres != null && film.AllGenres.Count > 0)
+                GenreText.Text = string.Join(", ", film.AllGenres);
+            else
+                GenreText.Text = film.Genre ?? "";
+
             RatingText.Text = film.Rating.HasValue ? $"★ {film.Rating:F1}" : "";
             CountryText.Text = film.Country ?? "";
-            ActorsText.Text = film.Actors != null && film.Actors.Count > 0
-                ? string.Join(", ", film.Actors)
-                : "";
+
+            if (film.MovieLength.HasValue && film.MovieLength > 0)
+                LengthText.Text = $"Длительность: {film.MovieLength} мин.";
+            else
+                LengthText.Text = "";
+
+            if (film.AgeRating.HasValue && film.AgeRating > 0)
+                AgeRatingText.Text = $"Возрастной рейтинг: {film.AgeRating}+";
+            else
+                AgeRatingText.Text = "";
+
+            if (film.Actors != null && film.Actors.Count > 0)
+            {
+                var actorsToShow = film.Actors.Take(5).ToList();
+                ActorsText.Text = $"Актеры: {string.Join(", ", actorsToShow)}";
+                if (film.Actors.Count > 5)
+                    ActorsText.Text += $"\nи еще {film.Actors.Count - 5}";
+            }
+            else
+                ActorsText.Text = "";
 
             NavigationText.Text = $"{_currentIndex + 1} из {_allFilms.Count}";
 
@@ -43,7 +74,12 @@ namespace filamri
             {
                 try
                 {
-                    PosterImage.Source = new BitmapImage(new Uri(film.PosterUrl));
+                    var bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(film.PosterUrl);
+                    bitmap.CacheOption = BitmapCacheOption.OnLoad;
+                    bitmap.EndInit();
+                    PosterImage.Source = bitmap;
                 }
                 catch
                 {
@@ -51,16 +87,7 @@ namespace filamri
                 }
             }
 
-            // Если окно открыто из подборки - скрываем кнопку добавления
-            if (_fromCollection)
-            {
-                AddToCollectionButton.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                AddToCollectionButton.Visibility = Visibility.Visible;
-                AddToCollectionButton.Tag = film;
-            }
+            RemoveFromCollectionButton.Tag = film;
         }
 
         private void PreviousFilm_Click(object sender, RoutedEventArgs e)
@@ -86,19 +113,33 @@ namespace filamri
             Close();
         }
 
-        private async void AddToCollection_Click(object sender, RoutedEventArgs e)
+        private async void RemoveFromCollection_Click(object sender, RoutedEventArgs e)
         {
-            var film = (sender as System.Windows.Controls.Button)?.Tag as Film;
+            var button = sender as Button;
+            var film = button?.Tag as Film;
             if (film == null) return;
 
-            var selectWindow = new SelectCollectionWindow(film.Id);
-            selectWindow.Owner = this;
+            var result = MessageBox.Show(
+                $"Удалить фильм \"{film.Name}\" из подборки \"{_collection.Name}\"?",
+                "Подтверждение",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
-            if (selectWindow.ShowDialog() == true && !string.IsNullOrWhiteSpace(selectWindow.SelectedCollectionName))
+            if (result == MessageBoxResult.Yes)
             {
-                await _apiService.AddToCollectionAsync(film.Id, selectWindow.SelectedCollectionName);
-                MessageBox.Show($"✅ Фильм добавлен в подборку \"{selectWindow.SelectedCollectionName}\"",
-                    "Успешно", MessageBoxButton.OK, MessageBoxImage.Information);
+                try
+                {
+                    await _apiService.RemoveFromCollection(_collection.Name, film.Id);
+                    MessageBox.Show("✅ Фильм удален из подборки", "Успешно",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    DialogResult = true;
+                    Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка",
+                        MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
         }
     }

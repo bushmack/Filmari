@@ -17,7 +17,7 @@ namespace filamri.Services
         public ApiService()
         {
             _httpClient = new HttpClient();
-            _httpClient.BaseAddress = new Uri("http://localhost:8000");
+            _httpClient.BaseAddress = new Uri("http://localhost:8001");
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
 
             _jsonOptions = new JsonSerializerOptions

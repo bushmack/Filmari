@@ -3,60 +3,60 @@
   "WorkspaceRootPath": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\FilmControl.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Views\\FilmControl.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\views\\filmcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\filmcontrol.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\FilmDetailWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\FilmDetailWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\views\\filmcontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\filmcontrol.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Views\\MovieMatchWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\filmdetailwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\filmdetailwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\FilmControl.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Views\\FilmControl.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Models\\Film.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Models\\Film.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\collectiondetailwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\collectiondetailwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\MainWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\CollectionDetailWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\CollectionDetailWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\collectiondetailwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\collectiondetailwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\MainWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\filmdetailwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\filmdetailwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\FilmDetailWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\FilmDetailWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\services\\apiservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\CollectionDetailWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\CollectionDetailWindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\views\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Services\\ApiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Services\\ApiService.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\views\\moviematchwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\views\\moviematchwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Views\\MovieMatchWindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\models\\film.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\models\\film.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Dialogs\\FilterDialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\dialogs\\filterdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\dialogs\\filterdialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:filamri\\Dialogs\\FilterDialog.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|c:\\users\\\u0435\u0433\u043E\u0440\\documents\\github\\filmari\\filamri\\dialogs\\filterdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F5349D68-0E63-44D4-8184-EFB09D0CD582}|filamri\\filamri.csproj|solutionrelative:filamri\\dialogs\\filterdialog.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,18 +70,19 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "FilmDetailWindow.xaml",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\FilmDetailWindow.xaml",
               "RelativeDocumentMoniker": "filamri\\FilmDetailWindow.xaml",
               "ToolTip": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\FilmDetailWindow.xaml",
               "RelativeToolTip": "filamri\\FilmDetailWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-16T14:21:19.142Z"
+              "WhenOpened": "2026-03-16T14:21:19.142Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "MovieMatchWindow.xaml",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml",
               "RelativeDocumentMoniker": "filamri\\Views\\MovieMatchWindow.xaml",
@@ -92,7 +93,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "FilmControl.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\FilmControl.xaml.cs",
               "RelativeDocumentMoniker": "filamri\\Views\\FilmControl.xaml.cs",
@@ -100,7 +101,8 @@
               "RelativeToolTip": "filamri\\Views\\FilmControl.xaml.cs",
               "ViewState": "AgIAACQAAAAAAAAAAAAYwEkAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T10:27:43.776Z"
+              "WhenOpened": "2026-03-05T10:27:43.776Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -110,14 +112,13 @@
               "RelativeDocumentMoniker": "filamri\\Views\\FilmControl.xaml",
               "ToolTip": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\FilmControl.xaml",
               "RelativeToolTip": "filamri\\Views\\FilmControl.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-03-05T10:27:30.909Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 11,
               "Title": "Film.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Models\\Film.cs",
               "RelativeDocumentMoniker": "filamri\\Models\\Film.cs",
@@ -129,18 +130,19 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\MainWindow.xaml",
               "RelativeDocumentMoniker": "filamri\\MainWindow.xaml",
               "ToolTip": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\MainWindow.xaml",
               "RelativeToolTip": "filamri\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-05T10:47:30.694Z"
+              "WhenOpened": "2026-03-05T10:47:30.694Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 4,
               "Title": "CollectionDetailWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\CollectionDetailWindow.xaml.cs",
               "RelativeDocumentMoniker": "filamri\\CollectionDetailWindow.xaml.cs",
@@ -148,11 +150,12 @@
               "RelativeToolTip": "filamri\\CollectionDetailWindow.xaml.cs",
               "ViewState": "AgIAACYAAAAAAAAAAAAYwEsAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-16T14:21:54.257Z"
+              "WhenOpened": "2026-03-16T14:21:54.257Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "MainWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\MainWindow.xaml.cs",
               "RelativeDocumentMoniker": "filamri\\MainWindow.xaml.cs",
@@ -160,11 +163,12 @@
               "RelativeToolTip": "filamri\\MainWindow.xaml.cs",
               "ViewState": "AgIAANwAAAAAAAAAAAAYwAEBAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-04T10:01:24.544Z"
+              "WhenOpened": "2026-03-04T10:01:24.544Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 7,
               "Title": "FilmDetailWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\FilmDetailWindow.xaml.cs",
               "RelativeDocumentMoniker": "filamri\\FilmDetailWindow.xaml.cs",
@@ -172,22 +176,24 @@
               "RelativeToolTip": "filamri\\FilmDetailWindow.xaml.cs",
               "ViewState": "AgIAAGoAAAAAAAAAAAAqwJEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-16T14:21:31.054Z"
+              "WhenOpened": "2026-03-16T14:21:31.054Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 6,
               "Title": "CollectionDetailWindow.xaml",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\CollectionDetailWindow.xaml",
               "RelativeDocumentMoniker": "filamri\\CollectionDetailWindow.xaml",
               "ToolTip": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\CollectionDetailWindow.xaml",
               "RelativeToolTip": "filamri\\CollectionDetailWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-16T14:21:50.524Z"
+              "WhenOpened": "2026-03-16T14:21:50.524Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 8,
               "Title": "ApiService.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Services\\ApiService.cs",
               "RelativeDocumentMoniker": "filamri\\Services\\ApiService.cs",
@@ -195,11 +201,12 @@
               "RelativeToolTip": "filamri\\Services\\ApiService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T07:40:24.742Z"
+              "WhenOpened": "2026-03-05T07:40:24.742Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 9,
               "Title": "MovieMatchWindow.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Views\\MovieMatchWindow.xaml.cs",
               "RelativeDocumentMoniker": "filamri\\Views\\MovieMatchWindow.xaml.cs",
@@ -211,7 +218,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "FilterDialog.xaml.cs",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml.cs",
               "RelativeDocumentMoniker": "filamri\\Dialogs\\FilterDialog.xaml.cs",
@@ -223,7 +230,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 12,
               "Title": "FilterDialog.xaml",
               "DocumentMoniker": "C:\\Users\\\u0435\u0433\u043E\u0440\\Documents\\GitHub\\Filmari\\filamri\\Dialogs\\FilterDialog.xaml",
               "RelativeDocumentMoniker": "filamri\\Dialogs\\FilterDialog.xaml",
