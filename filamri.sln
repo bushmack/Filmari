@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4
+VisualStudioVersion = 17.14.37027.9 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "filamri", "filamri\filamri.csproj", "{F5349D68-0E63-44D4-8184-EFB09D0CD582}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Filamri", "Filamri\Filamri.csproj", "{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F5349D68-0E63-44D4-8184-EFB09D0CD582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F5349D68-0E63-44D4-8184-EFB09D0CD582}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F5349D68-0E63-44D4-8184-EFB09D0CD582}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F5349D68-0E63-44D4-8184-EFB09D0CD582}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {039AD9FB-432A-42DD-9C6F-8CD9AC6E3FA6}
+		SolutionGuid = {6EA19A6B-C1DA-404B-9625-DEE138FBEC5C}
 	EndGlobalSection
 EndGlobal

@@ -1,134 +1,92 @@
 ﻿<Window x:Class="filamri.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="filamri - Поиск фильмов" 
-        Height="750" 
-        Width="1200"
+        Title="filamri - Кино на максималках" 
+        Height="900" 
+        Width="1400"
         WindowStartupLocation="CenterScreen"
-        Background="#FFF5F5F5"
-        WindowState="Maximized">
+        WindowState="Maximized"
+        Background="{StaticResource DarkGradient}">
 
-    <Grid Margin="10">
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="30" Opacity="0.2"/>
+    </Window.Effect>
+
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Верхняя панель с кнопками -->
-        <WrapPanel Grid.Row="0" Margin="0,0,0,15" HorizontalAlignment="Center">
-            <Button Content="🎬 5 случайных фильмов" 
-                    Click="LoadRandomMovies_Click" 
-                    Width="160" Height="45" Margin="5"
-                    Background="#FF0078D7" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+        <!-- Стеклянная панель с кнопками -->
+        <Border Grid.Row="0" 
+                Background="#CC2D3436" 
+                CornerRadius="30" 
+                Margin="0,0,0,25"
+                Padding="20,15"
+                Effect="{StaticResource CardShadow}">
 
-            <Button Content="📺 5 случайных сериалов"
-                    Click="LoadRandomSeries_Click"
-                    Width="160" Height="45" Margin="5"
-                    Background="#FF0078D7" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+            <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
 
-            <Button Content="🔍 Поиск по названию"
-                    Click="NameSearch_Click"
-                    Width="150" Height="45" Margin="5"
-                    Background="#FF5C2E91" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                    <Button Content="🎬 Случайные фильмы" 
+                            Click="LoadRandomMovies_Click" 
+                            Width="180" Height="50" Margin="5"
+                            Background="{StaticResource PrimaryGradient}"
+                            Style="{StaticResource NeonButton}"/>
 
-            <Button Content="🎭 Поиск по актерам"
-                    Click="ActorSearch_Click"
-                    Width="150" Height="45" Margin="5"
-                    Background="#FF5C2E91" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                    <Button Content="📺 Случайные сериалы"
+                            Click="LoadRandomSeries_Click"
+                            Width="180" Height="50" Margin="5"
+                            Background="{StaticResource SecondaryGradient}"
+                            Style="{StaticResource NeonButton}"/>
 
-            <Button Content="⚡ Поиск по фильтру"
-                    Click="FilterSearch_Click"
-                    Width="140" Height="45" Margin="5"
-                    Background="#FFD83B01" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                    <Button Content="🔍 Поиск"
+                            Click="NameSearch_Click"
+                            Width="150" Height="50" Margin="5"
+                            Background="#FF6C5CE7"
+                            Style="{StaticResource NeonButton}"/>
 
-            <Button Content="🤝 Совместный поиск"
-                    Click="CombinedSearch_Click"
-                    Width="150" Height="45" Margin="5"
-                    Background="#FFD83B01" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                    <Button Content="🎭 Актеры"
+                            Click="ActorSearch_Click"
+                            Width="150" Height="50" Margin="5"
+                            Background="#FF00B894"
+                            Style="{StaticResource NeonButton}"/>
 
-            <Button Content="📚 Мои подборки"
-                    Click="MyCollections_Click"
-                    Width="130" Height="45" Margin="5"
-                    Background="#FF107C10" Foreground="White"
-                    FontSize="14" FontWeight="Bold"
-                    Cursor="Hand">
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
-        </WrapPanel>
+                    <Button Content="⚡ Фильтр"
+                            Click="FilterSearch_Click"
+                            Width="140" Height="50" Margin="5"
+                            Background="#FFFD79A8"
+                            Style="{StaticResource NeonButton}"/>
 
-        <!-- КОНТЕЙНЕР ДЛЯ ФИЛЬМОВ - ВАЖНО! -->
-        <ScrollViewer Grid.Row="1" 
-                      VerticalScrollBarVisibility="Auto"
-                      Background="White"
-                      BorderBrush="#FFDDDDDD" 
-                      BorderThickness="1">
-            <StackPanel x:Name="FilmContainer" Margin="10"/>
-        </ScrollViewer>
+                    <Button Content="🤝 Вместе"
+                            Click="CombinedSearch_Click"
+                            Width="150" Height="50" Margin="5"
+                            Background="#FFFDCB6E"
+                            Style="{StaticResource NeonButton}"/>
+
+                    <Button Content="📚 Подборки"
+                            Click="MyCollections_Click"
+                            Width="140" Height="50" Margin="5"
+                            Background="{StaticResource SecondaryGradient}"
+                            Style="{StaticResource NeonButton}"/>
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+
+        <!-- Контейнер для фильмов -->
+        <Border Grid.Row="1" 
+                Background="#CCFFFFFF" 
+                CornerRadius="30" 
+                Padding="20"
+                Effect="{StaticResource CardShadow}">
+
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Background="Transparent">
+                <StackPanel x:Name="FilmContainer" Margin="10"/>
+            </ScrollViewer>
+
+        </Border>
     </Grid>
 </Window>

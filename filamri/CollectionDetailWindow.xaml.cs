@@ -34,7 +34,8 @@ namespace filamri
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки фильмов: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Ошибка загрузки фильмов: {ex.Message}",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -42,9 +43,9 @@ namespace filamri
         {
             var border = sender as System.Windows.Controls.Border;
             var film = border?.Tag as Film;
+
             if (film != null)
             {
-                // Передаем коллекцию, а не bool
                 var detailWindow = new FilmDetailWindow(film, _films, _collection);
                 detailWindow.Owner = this;
                 detailWindow.ShowDialog();
@@ -56,15 +57,21 @@ namespace filamri
         {
             var button = sender as System.Windows.Controls.Button;
             var film = button?.Tag as Film;
-            if (film == null) return;
 
-            var result = MessageBox.Show($"Удалить фильм \"{film.Name}\" из подборки?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (result == MessageBoxResult.Yes)
+            if (film != null)
             {
-                await _apiService.RemoveFromCollection(_collection.Name, film.Id);
-                _collection.Movies.Remove(film.Id);
-                _films.Remove(film);
-                LoadMovies();
+                var result = MessageBox.Show(
+                    $"Удалить фильм \"{film.Name}\" из подборки?",
+                    "Подтверждение",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    await _apiService.RemoveFromCollection(_collection.Name, film.Id);
+                    _collection.Movies.Remove(film.Id);
+                    LoadMovies();
+                }
             }
         }
 

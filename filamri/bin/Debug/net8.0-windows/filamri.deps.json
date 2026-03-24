@@ -6,12 +6,12 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v8.0": {
-      "filamri/1.0.0": {
+      "Filamri/1.0.0": {
         "dependencies": {
           "System.Net.Http.Json": "8.0.0"
         },
         "runtime": {
-          "filamri.dll": {}
+          "Filamri.dll": {}
         }
       },
       "System.Net.Http.Json/8.0.0": {
@@ -28,7 +28,7 @@
     }
   },
   "libraries": {
-    "filamri/1.0.0": {
+    "Filamri/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\егор\\Documents\\GitHub\\Filmari\\filamri\\filamri.csproj": {}
+    "C:\\Users\\егор\\source\\repos\\Filamri\\Filamri\\Filamri.csproj": {}
   },
   "projects": {
-    "C:\\Users\\егор\\Documents\\GitHub\\Filmari\\filamri\\filamri.csproj": {
+    "C:\\Users\\егор\\source\\repos\\Filamri\\Filamri\\Filamri.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\егор\\Documents\\GitHub\\Filmari\\filamri\\filamri.csproj",
-        "projectName": "filamri",
-        "projectPath": "C:\\Users\\егор\\Documents\\GitHub\\Filmari\\filamri\\filamri.csproj",
+        "projectUniqueName": "C:\\Users\\егор\\source\\repos\\Filamri\\Filamri\\Filamri.csproj",
+        "projectName": "Filamri",
+        "projectPath": "C:\\Users\\егор\\source\\repos\\Filamri\\Filamri\\Filamri.csproj",
         "packagesPath": "C:\\Users\\егор\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\егор\\Documents\\GitHub\\Filmari\\filamri\\obj\\",
+        "outputPath": "C:\\Users\\егор\\source\\repos\\Filamri\\Filamri\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\componenti\\NuGetPackages"

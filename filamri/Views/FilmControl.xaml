@@ -4,12 +4,14 @@
              Background="Transparent"
              Height="Auto"
              Width="Auto">
-    <Border Background="White" 
-            BorderBrush="#FFDDDDDD" 
-            BorderThickness="1" 
-            CornerRadius="12" 
+
+    <Border x:Name="CardBorder"
+            Background="White" 
+            CornerRadius="30" 
             Margin="10" 
-            Padding="25">
+            Padding="30"
+            Effect="{StaticResource CardShadow}">
+
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -17,83 +19,119 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="400"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Постер (увеличенный) -->
+            <!-- Постер -->
             <Border Grid.Row="0" 
                     Grid.Column="0" 
                     Grid.RowSpan="3"
-                    BorderBrush="#FFDDDDDD" 
-                    BorderThickness="1" 
-                    CornerRadius="8" 
-                    Margin="0,0,25,0"
-                    Background="#FFF9F9F9">
-                <Image x:Name="PosterImage" 
-                       Height="450" 
-                       Width="320" 
-                       Stretch="Uniform" 
-                       Margin="5"/>
+                    CornerRadius="20" 
+                    Margin="0,0,30,0"
+                    Background="{StaticResource PrimaryGradient}"
+                    Padding="5">
+                <Border CornerRadius="18" Background="White" Padding="5">
+                    <Image x:Name="PosterImage" 
+                           Height="500" 
+                           Width="350" 
+                           Stretch="Uniform" 
+                           Margin="0"/>
+                </Border>
             </Border>
 
-            <!-- Название и основные параметры -->
-            <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,15">
+            <!-- Название -->
+            <StackPanel Grid.Row="0" Grid.Column="1" Margin="0,0,0,20">
                 <TextBlock x:Name="TitleText" 
-                           FontSize="36" 
+                           FontSize="48" 
                            FontWeight="Bold" 
                            TextWrapping="Wrap"
-                           Margin="0,0,0,15"
-                           LineHeight="42"/>
+                           Margin="0,0,0,20"
+                           LineHeight="54"
+                           Foreground="{StaticResource DarkBrush}"/>
 
-                <WrapPanel Margin="0,5,0,15">
-                    <TextBlock x:Name="YearText" 
-                               FontSize="20" 
-                               Foreground="Gray" 
-                               Margin="0,0,15,0"/>
-                    <TextBlock x:Name="GenreText" 
-                               FontSize="20" 
-                               Foreground="Gray"
-                               TextWrapping="Wrap"
-                               MaxWidth="400"/>
-                    <TextBlock x:Name="RatingText" 
-                               FontSize="20" 
-                               Foreground="Gold" 
-                               FontWeight="Bold"
-                               Margin="15,0,0,0"/>
+                <WrapPanel Margin="0,5,0,20">
+                    <Border Background="{StaticResource PrimaryBrush}" 
+                            CornerRadius="20" 
+                            Padding="12,6" 
+                            Margin="0,0,10,0">
+                        <TextBlock x:Name="YearText" 
+                                   FontSize="18" 
+                                   Foreground="White"
+                                   FontWeight="Bold"/>
+                    </Border>
+
+                    <Border Background="{StaticResource SecondaryBrush}" 
+                            CornerRadius="20" 
+                            Padding="12,6" 
+                            Margin="0,0,10,0">
+                        <TextBlock x:Name="GenreText" 
+                                   FontSize="18" 
+                                   Foreground="White"
+                                   FontWeight="Bold"
+                                   TextWrapping="Wrap"/>
+                    </Border>
+
+                    <Border Background="Gold" 
+                            CornerRadius="20" 
+                            Padding="12,6">
+                        <TextBlock x:Name="RatingText" 
+                                   FontSize="18" 
+                                   Foreground="Black"
+                                   FontWeight="Bold"/>
+                    </Border>
                 </WrapPanel>
 
-                <TextBlock x:Name="CountryText" 
-                           FontSize="18" 
-                           Foreground="Gray"
-                           Margin="0,5,0,5"/>
+                <Border Background="{StaticResource DarkBrush}" 
+                        CornerRadius="15" 
+                        Padding="10" 
+                        Margin="0,5,0,5"
+                        Opacity="0.8">
+                    <TextBlock x:Name="CountryText" 
+                               FontSize="16" 
+                               Foreground="White"/>
+                </Border>
 
-                <TextBlock x:Name="LengthText" 
-                           FontSize="18" 
-                           Foreground="Gray"
-                           Margin="0,5,0,5"/>
+                <Border Background="{StaticResource AccentBrush}" 
+                        CornerRadius="15" 
+                        Padding="10" 
+                        Margin="0,5,0,5"
+                        Opacity="0.8">
+                    <TextBlock x:Name="LengthText" 
+                               FontSize="16" 
+                               Foreground="White"/>
+                </Border>
             </StackPanel>
 
             <!-- Актеры -->
-            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,0,20">
+            <Border Grid.Row="1" 
+                    Grid.Column="1" 
+                    CornerRadius="20"
+                    Background="#E0E0E0"
+                    Padding="15"
+                    Margin="0,0,0,20">
                 <TextBlock x:Name="ActorsText" 
-                           FontSize="18" 
-                           Foreground="#FF0078D7" 
+                           FontSize="16" 
+                           Foreground="#333"
                            TextWrapping="Wrap"
-                           LineHeight="26"/>
-            </StackPanel>
+                           LineHeight="24"/>
+            </Border>
 
-            <!-- Описание (во весь экран) -->
-            <ScrollViewer Grid.Row="2" 
-                         Grid.Column="1" 
-                         VerticalScrollBarVisibility="Auto"
-                         HorizontalScrollBarVisibility="Disabled">
-                <TextBlock x:Name="DescriptionText" 
-                           FontSize="18" 
-                           TextWrapping="Wrap"
-                           LineHeight="28"
-                           Margin="0,10,10,0"/>
-            </ScrollViewer>
+            <!-- Описание -->
+            <Border Grid.Row="2" 
+                    Grid.Column="1" 
+                    CornerRadius="20"
+                    Background="#F0F0F0"
+                    Padding="20">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled">
+                    <TextBlock x:Name="DescriptionText" 
+                               FontSize="16" 
+                               TextWrapping="Wrap"
+                               LineHeight="24"
+                               Foreground="#2D3436"/>
+                </ScrollViewer>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

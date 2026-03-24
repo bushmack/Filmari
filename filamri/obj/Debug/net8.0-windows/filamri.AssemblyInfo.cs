@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("filamri")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("Filamri")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cb3863789b80bebbd952f0f7b9826a8d4aa19207")]
-[assembly: System.Reflection.AssemblyProductAttribute("filamri")]
-[assembly: System.Reflection.AssemblyTitleAttribute("filamri")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyProductAttribute("Filamri")]
+[assembly: System.Reflection.AssemblyTitleAttribute("Filamri")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
