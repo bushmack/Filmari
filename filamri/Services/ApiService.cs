@@ -1,7 +1,6 @@
 ﻿using filamri.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -108,6 +107,117 @@ namespace filamri.Services
             }
             return new List<Film>();
         }
+
+
+
+
+
+        // ========== СОВМЕСТНЫЙ ПРОСМОТР (WATCH PARTY) ==========
+
+        public async Task<WatchRoom?> CreateWatchRoom(string userId, string userName, string videoPath)
+        {
+            try
+            {
+                var request = new { user_id = userId, user_name = userName, video_path = videoPath };
+                var response = await _httpClient.PostAsJsonAsync("/api/watch/create-room", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<WatchRoom>(json, _jsonOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка создания комнаты: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<WatchRoom?> JoinWatchRoom(string roomId, string userId, string userName)
+        {
+            try
+            {
+                var request = new { room_id = roomId, user_id = userId, user_name = userName };
+                var response = await _httpClient.PostAsJsonAsync("/api/watch/join-room", request);
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<WatchRoom>(json, _jsonOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка подключения: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<WatchRoom?> GetWatchRoomStatus(string roomId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"/api/watch/room-status/{roomId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<WatchRoom>(json, _jsonOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка получения статуса: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<bool> SendWatchMessage(string roomId, string userId, string userName, string message)
+        {
+            try
+            {
+                var request = new { room_id = roomId, user_id = userId, user_name = userName, message };
+                var response = await _httpClient.PostAsJsonAsync("/api/watch/send-message", request);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка отправки сообщения: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> SyncWatchState(string roomId, double position, bool isPlaying)
+        {
+            try
+            {
+                var request = new { room_id = roomId, position, is_playing = isPlaying };
+                var response = await _httpClient.PostAsJsonAsync("/api/watch/sync-state", request);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка синхронизации: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> LeaveWatchRoom(string roomId, string userId)
+        {
+            try
+            {
+                var response = await _httpClient.DeleteAsync($"/api/watch/leave-room/{roomId}/{userId}");
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка выхода: {ex.Message}");
+                return false;
+            }
+        }
+
+
+
+
+
 
         // ========== ПОИСК ПО ФИЛЬТРУ ==========
 
@@ -258,6 +368,8 @@ namespace filamri.Services
 
         // ========== СОВМЕСТНЫЙ ПОИСК (MATCH) ==========
 
+
+
         public async Task<dynamic> CreateMatchRoom(object request)
         {
             try
@@ -364,6 +476,126 @@ namespace filamri.Services
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"Ошибка выхода из комнаты: {ex.Message}");
+            }
+        }
+
+        // ========== КОММЕНТАРИИ ==========
+
+        public async Task<List<Comment>?> GetCommentsAsync(int movieId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"/api/comments/{movieId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json, _jsonOptions);
+                    if (data != null && data.TryGetValue("comments", out var commentsObj))
+                    {
+                        var commentsJson = ((JsonElement)commentsObj).GetRawText();
+                        return JsonSerializer.Deserialize<List<Comment>>(commentsJson, _jsonOptions);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка загрузки комментариев: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<bool> AddCommentAsync(int movieId, string userName, string text, string userId)
+        {
+            try
+            {
+                var url = $"/api/comments/add?movie_id={movieId}&user_name={HttpUtility.UrlEncode(userName)}&text={HttpUtility.UrlEncode(text)}&user_id={userId}";
+                var response = await _httpClient.PostAsync(url, null);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка добавления комментария: {ex.Message}");
+                return false;
+            }
+        }
+
+        public async Task<bool> DeleteCommentAsync(int movieId, int commentIndex, string userId)
+        {
+            try
+            {
+                var url = $"/api/comments/delete?movie_id={movieId}&comment_index={commentIndex}&user_id={userId}";
+                var response = await _httpClient.DeleteAsync(url);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка удаления комментария: {ex.Message}");
+                return false;
+            }
+        }
+
+        // ========== ЛИЧНЫЙ КАБИНЕТ ==========
+
+        public async Task<UserProfile?> GetUserProfileAsync(string userId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"/api/user/profile?user_id={userId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    var data = JsonSerializer.Deserialize<Dictionary<string, object>>(json, _jsonOptions);
+                    if (data != null && data.TryGetValue("profile", out var profileObj))
+                    {
+                        var profileJson = ((JsonElement)profileObj).GetRawText();
+                        return JsonSerializer.Deserialize<UserProfile>(profileJson, _jsonOptions);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка загрузки профиля: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<UserProgress?> GetUserProgressAsync(string userId)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync($"/api/user/progress?user_id={userId}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    return JsonSerializer.Deserialize<UserProgress>(json, _jsonOptions);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка загрузки прогресса: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<bool> UpdateUserProfileAsync(string userId, string? userName, string? avatarUrl)
+        {
+            try
+            {
+                var parameters = new List<string>();
+                parameters.Add($"user_id={userId}");
+                if (!string.IsNullOrEmpty(userName))
+                    parameters.Add($"user_name={HttpUtility.UrlEncode(userName)}");
+                if (!string.IsNullOrEmpty(avatarUrl))
+                    parameters.Add($"avatar_url={HttpUtility.UrlEncode(avatarUrl)}");
+                
+                var url = $"/api/user/update?{string.Join("&", parameters)}";
+                var response = await _httpClient.PostAsync(url, null);
+                return response.IsSuccessStatusCode;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Ошибка обновления профиля: {ex.Message}");
+                return false;
             }
         }
     }

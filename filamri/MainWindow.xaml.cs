@@ -1,4 +1,5 @@
-﻿using filamri.Dialogs;
+﻿using filamri;
+using filamri.Dialogs;
 using filamri.Models;
 using filamri.Services;
 using filamri.Views;
@@ -9,17 +10,19 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Input;
 
+
 namespace filamri
 {
     public partial class MainWindow : Window
     {
-        private readonly ApiService _apiService = new ApiService();
-        private List<Film> _movies = new List<Film>();
+        private readonly ApiService _apiService = new();
+        private List<Film> _movies = new();
         private int _currentIndex = 0;
 
         public MainWindow()
         {
             InitializeComponent();
+            AppData.Initialize();
         }
 
         private async void LoadRandomMovies_Click(object sender, RoutedEventArgs e)
@@ -138,6 +141,14 @@ namespace filamri
             }
         }
 
+        private void OpenProfile_Click(object sender, RoutedEventArgs e)
+        {
+            var profileWindow = new ProfileWindow();
+            profileWindow.Owner = this;
+            profileWindow.ShowDialog();
+        }
+
+
         private void DisplayCurrentFilm()
         {
             if (FilmContainer == null) return;
@@ -158,8 +169,6 @@ namespace filamri
 
             var film = _movies[_currentIndex];
             var filmControl = new FilmControl(film);
-            // УБРАЛИ ОТКРЫТИЕ ОКНА
-            // filmControl.MouseLeftButtonUp += (s, e) => OpenFilmDetail(film);
 
             var stack = new StackPanel { Orientation = Orientation.Vertical };
             stack.Children.Add(filmControl);
@@ -241,6 +250,26 @@ namespace filamri
                 }
             };
             navPanel.Children.Add(addBtn);
+
+            var profileBtn = new Button
+            {
+                Content = "👤 Профиль",
+                Width = 100,
+                Height = 40,
+                Margin = new Thickness(10, 0, 0, 0),
+                FontWeight = FontWeights.Bold,
+                Cursor = Cursors.Hand,
+                ToolTip = "Личный кабинет"
+            };
+            profileBtn.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FF6C5CE7"));
+            profileBtn.Foreground = Brushes.White;
+            profileBtn.Click += (s, args) =>
+            {
+                var profileWindow = new ProfileWindow();
+                profileWindow.Owner = this;
+                profileWindow.ShowDialog();
+            };
+            navPanel.Children.Add(profileBtn);
 
             stack.Children.Add(navPanel);
             FilmContainer.Children.Add(stack);

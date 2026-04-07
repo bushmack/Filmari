@@ -53,7 +53,7 @@ namespace filamri.Pages
                 var request = new { user_id = _userId, user_name = _userName, genres };
                 var result = await _apiService.CreateMatchRoom(request);
 
-                _roomId = result.room_id;
+                _roomId = result.roomId;
                 _selectedGenres = genres;
 
                 SetupGrid.Visibility = Visibility.Collapsed;

@@ -34,6 +34,8 @@
                             Width="180" Height="50" Margin="5"
                             Background="{StaticResource PrimaryGradient}"
                             Style="{StaticResource NeonButton}"/>
+                    
+                    
 
                     <Button Content="📺 Случайные сериалы"
                             Click="LoadRandomSeries_Click"
@@ -41,6 +43,8 @@
                             Background="{StaticResource SecondaryGradient}"
                             Style="{StaticResource NeonButton}"/>
 
+                    
+                    
                     <Button Content="🔍 Поиск"
                             Click="NameSearch_Click"
                             Width="150" Height="50" Margin="5"
@@ -71,21 +75,24 @@
                             Background="{StaticResource SecondaryGradient}"
                             Style="{StaticResource NeonButton}"/>
 
+                    <Button Content="👤 Профиль"
+                            Click="OpenProfile_Click"
+                            Width="140" Height="50" Margin="5"
+                            Background="#FF6C5CE7"
+                            Style="{StaticResource NeonButton}"/>
+
                 </StackPanel>
             </ScrollViewer>
         </Border>
 
-        <!-- Контейнер для фильмов -->
+        <!-- Контейнер для фильмов - БЕЗ СКРОЛЛА -->
         <Border Grid.Row="1" 
                 Background="#CCFFFFFF" 
                 CornerRadius="30" 
                 Padding="20"
                 Effect="{StaticResource CardShadow}">
 
-            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          Background="Transparent">
-                <StackPanel x:Name="FilmContainer" Margin="10"/>
-            </ScrollViewer>
+            <StackPanel x:Name="FilmContainer" Margin="10" VerticalAlignment="Top"/>
 
         </Border>
     </Grid>

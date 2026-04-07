@@ -3,20 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
-        <!-- Цвета -->
         <Color x:Key="PrimaryColor">#6C5CE7</Color>
         <Color x:Key="SecondaryColor">#00B894</Color>
         <Color x:Key="AccentColor">#FD79A8</Color>
         <Color x:Key="DarkColor">#2D3436</Color>
 
-        <!-- Кисти -->
         <SolidColorBrush x:Key="PrimaryBrush" Color="#6C5CE7"/>
         <SolidColorBrush x:Key="SecondaryBrush" Color="#00B894"/>
         <SolidColorBrush x:Key="AccentBrush" Color="#FD79A8"/>
         <SolidColorBrush x:Key="DarkBrush" Color="#2D3436"/>
 
-        <!-- Градиенты -->
         <LinearGradientBrush x:Key="PrimaryGradient" StartPoint="0,0" EndPoint="1,1">
             <GradientStop Color="#6C5CE7" Offset="0.0"/>
             <GradientStop Color="#A29BFE" Offset="1.0"/>
@@ -32,10 +28,8 @@
             <GradientStop Color="#636E72" Offset="1.0"/>
         </LinearGradientBrush>
 
-        <!-- Тени -->
         <DropShadowEffect x:Key="CardShadow" BlurRadius="20" Opacity="0.15" ShadowDepth="5" Color="Black"/>
 
-        <!-- Стиль для кнопок (без сложной анимации) -->
         <Style x:Key="NeonButton" TargetType="Button">
             <Setter Property="Height" Value="50"/>
             <Setter Property="FontSize" Value="16"/>
@@ -59,14 +53,10 @@
                                     </Setter.Value>
                                 </Setter>
                             </Trigger>
-                            <Trigger Property="IsPressed" Value="True">
-                                <Setter TargetName="border" Property="Opacity" Value="0.8"/>
-                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-
     </Application.Resources>
 </Application>

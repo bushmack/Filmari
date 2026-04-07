@@ -11,6 +11,9 @@
     <Compile Update="CollectionViewWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="CommentsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Dialogs\CombinedSearchDialog.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -23,7 +26,19 @@
     <Compile Update="FilmDetailWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update=".xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MatchSwipeWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="MovieMatchWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Pages\MovieMatchPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="ProfileWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="SelectCollectionWindow.xaml.cs">
@@ -32,12 +47,24 @@
     <Compile Update="Views\FilmControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\MovieMatchWindow.xaml.cs">
+    <Compile Update="WatchPartyWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Views\MovieMatchWindow.xaml">
+    <Page Update="CommentsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MatchSwipeWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="MovieMatchWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="ProfileWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="WatchPartyWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

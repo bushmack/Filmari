@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\егор\source\repos\Filamri\Filamri\obj\Debug\net8.0-windows\
+D:\weather\Filmari\Filamri\obj\Debug\net8.0-windows\
 Filamri
 none
 false
-TRACE;DEBUG;NET;NET8_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
-C:\Users\егор\source\repos\Filamri\Filamri\App.xaml
-12-1972766426
+TRACE;DEBUG;NET;NET8_0;NETCOREAPP
+D:\weather\Filmari\Filamri\App.xaml
+16-662073486
 
-19498219317
-198185795992
-CollectionDetailWindow.xaml;CollectionsWindow.xaml;CollectionViewWindow.xaml;Dialogs\CombinedSearchDialog.xaml;Dialogs\FilterDialog.xaml;Dialogs\InputDialog.xaml;FilmDetailWindow.xaml;MainWindow.xaml;Pages\MovieMatchPage.xaml;SelectCollectionWindow.xaml;Views\FilmControl.xaml;Views\MovieMatchWindow.xaml;
+31-1898454605
+198-635017904
+CollectionDetailWindow.xaml;CollectionsWindow.xaml;CollectionViewWindow.xaml;CommentsWindow.xaml;Dialogs\CombinedSearchDialog.xaml;Dialogs\FilterDialog.xaml;Dialogs\InputDialog.xaml;FilmDetailWindow.xaml;MainWindow.xaml;MatchSwipeWindow.xaml;MovieMatchWindow.xaml;Pages\MovieMatchPage.xaml;ProfileWindow.xaml;SelectCollectionWindow.xaml;Views\FilmControl.xaml;WatchPartyWindow.xaml;
 
 False
 

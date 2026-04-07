@@ -32,7 +32,7 @@ namespace filamri
             TitleText.Text = film.Name;
 
             if (!string.IsNullOrEmpty(film.Description))
-                DescriptionText.Text = film.Description.Length > 250 ? film.Description.Substring(0, 250) + "..." : film.Description;
+                DescriptionText.Text = film.Description.Length > 250 ? film.Description[..250] + "..." : film.Description;
             else
                 DescriptionText.Text = "Описание отсутствует";
 
@@ -141,6 +141,22 @@ namespace filamri
                         MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void CommentsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var currentFilm = _allFilms[_currentIndex];
+            var commentsWindow = new CommentsWindow(currentFilm.Id, currentFilm.Name);
+            commentsWindow.Owner = this;
+            commentsWindow.ShowDialog();
+        }
+
+        // Кнопка "Смотреть вместе" - открывает MovieMatchWindow (совместный просмотр)
+        private void WatchPartyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var matchWindow = new MovieMatchWindow();
+            matchWindow.Owner = this;
+            matchWindow.ShowDialog();
         }
     }
 }
