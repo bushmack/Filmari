@@ -102,13 +102,15 @@
                 </Grid.RowDefinitions>
                 <TextBox x:Name="DebugConsole" 
          Grid.Row="3" 
-         Height="100" 
+         Height="150" 
          Background="#1A1A2E" 
          Foreground="#00FF00" 
          FontFamily="Consolas" 
          FontSize="10" 
          VerticalScrollBarVisibility="Auto"
-         IsReadOnly="True"/>
+         IsReadOnly="True"
+         Visibility="Visible"/>
+                <!-- Убедитесь что Visible -->
 
                 <TextBlock Text="💬 ЧАТ" FontSize="18" FontWeight="Bold" Foreground="White" 
                            HorizontalAlignment="Center" Margin="0,0,0,10"/>

@@ -20,7 +20,8 @@ namespace filamri
         public MovieMatchWindow()
         {
             InitializeComponent();
-            _httpClient.BaseAddress = new Uri("http://192.168.133.7:8001");
+            // ВАЖНО: WebSocket сервер на порту 8002!
+            _httpClient.BaseAddress = new Uri("http://192.168.133.7:8002");
             _userData = LocalStorage.Load();
         }
 
@@ -133,22 +134,26 @@ namespace filamri
 
                 var request = new { user_id = _userData.UserId, user_name = _userData.UserName, video_url = embedUrl };
                 var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("/api/watch/create-room", content);
+
+                // ИСПРАВЛЕНО: убираем /watch/ из пути
+                var response = await _httpClient.PostAsync("/api/create-room", content);
 
                 Mouse.OverrideCursor = null;
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var room = JsonSerializer.Deserialize<WatchRoom>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    var result = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
 
-                    if (room != null)
+                    if (result != null && result.ContainsKey("roomId"))
                     {
-                        MessageBox.Show($"✅ Комната создана!\n\nID комнаты: {room.RoomId}\n\n" +
+                        string roomId = result["roomId"].ToString();
+
+                        MessageBox.Show($"✅ Комната создана!\n\nID комнаты: {roomId}\n\n" +
                                         $"Поделитесь этим ID с другом.",
                                         "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        var watchWindow = new WatchPartyWindow(embedUrl, true, room.RoomId);
+                        var watchWindow = new WatchPartyWindow(embedUrl, true, roomId);
                         watchWindow.Owner = this;
                         watchWindow.ShowDialog();
                         Close();
@@ -156,7 +161,9 @@ namespace filamri
                 }
                 else
                 {
-                    MessageBox.Show("Ошибка создания комнаты", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"Ошибка создания комнаты: {response.StatusCode}\n{error}",
+                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -181,28 +188,28 @@ namespace filamri
 
                 var request = new { room_id = roomId, user_id = _userData.UserId, user_name = _userData.UserName };
                 var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("/api/watch/join-room", content);
+
+                // ИСПРАВЛЕНО: убираем /watch/ из пути
+                var response = await _httpClient.PostAsync("/api/join-room", content);
 
                 Mouse.OverrideCursor = null;
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var room = JsonSerializer.Deserialize<WatchRoom>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    var result = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
 
-                    if (room != null && !string.IsNullOrEmpty(room.VideoUrl))
+                    if (result != null && result.ContainsKey("videoUrl"))
                     {
+                        string videoUrl = result["videoUrl"].ToString();
+
                         MessageBox.Show($"✅ Вы подключились к комнате {roomId}!\n\nСейчас начнется совместный просмотр.",
                             "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        var watchWindow = new WatchPartyWindow(room.VideoUrl, false, roomId);
+                        var watchWindow = new WatchPartyWindow(videoUrl, false, roomId);
                         watchWindow.Owner = this;
                         watchWindow.ShowDialog();
                         Close();
-                    }
-                    else
-                    {
-                        MessageBox.Show("❌ Ошибка получения данных комнаты", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
@@ -211,7 +218,9 @@ namespace filamri
                 }
                 else
                 {
-                    MessageBox.Show("❌ Ошибка подключения к комнате", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    var error = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show($"❌ Ошибка подключения: {response.StatusCode}\n{error}",
+                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)

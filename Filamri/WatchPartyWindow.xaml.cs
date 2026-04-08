@@ -23,17 +23,28 @@ namespace filamri
         private bool _isSyncing;
         private bool _isPlaying = false;
         private double _currentTime = 0;
+        private bool _isVideoReady = false;
+        private CoreWebView2Environment? _webViewEnvironment;
 
         public WatchPartyWindow(string videoUrl, bool isHost, string roomId)
         {
             InitializeComponent();
-            _httpClient.BaseAddress = new Uri("http://localhost:8002");
+
+            // Для HTTP запросов используем порт 8002
+            _httpClient.BaseAddress = new Uri("http://192.168.133.7:8002");
+            _httpClient.Timeout = TimeSpan.FromSeconds(5);
+
             _videoUrl = videoUrl;
             _isHost = isHost;
             _roomId = roomId;
             _userData = LocalStorage.Load();
 
             RoomIdText.Text = $"ID комнаты: {roomId}";
+
+            AddDebugMessage($"=== Инициализация ===");
+            AddDebugMessage($"Комната: {roomId}, isHost={isHost}");
+            AddDebugMessage($"Видео URL: {videoUrl}");
+            AddDebugMessage($"UserID: {_userData.UserId}");
 
             if (_isHost)
             {
@@ -48,20 +59,222 @@ namespace filamri
                 LoadingText.Visibility = Visibility.Visible;
             }
 
-            InitializeWebView();
-            ConnectWebSocket();
+            Loaded += async (s, e) => await InitializeAsync();
         }
 
-        private async void ConnectWebSocket()
+        private async Task InitializeAsync()
+        {
+            await InitializeWebView();
+            await ConnectWebSocket();
+        }
+
+        private async Task InitializeWebView()
         {
             try
             {
+                AddDebugMessage("Инициализация WebView2...");
+
+                string userDataFolder = System.IO.Path.Combine(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+                    "Filamri",
+                    "WebView2",
+                    _roomId);
+
+                _webViewEnvironment = await CoreWebView2Environment.CreateAsync(
+                    userDataFolder: userDataFolder,
+                    options: new CoreWebView2EnvironmentOptions
+                    {
+                        AllowSingleSignOnUsingOSPrimaryAccount = false,
+                        Language = "ru-RU"
+                    });
+
+                await VideoWebView.EnsureCoreWebView2Async(_webViewEnvironment);
+
+                AddDebugMessage("WebView2 инициализирован успешно");
+
+                VideoWebView.CoreWebView2.Settings.AreDevToolsEnabled = true;
+
+                string html = GetVideoHtml();
+                VideoWebView.NavigateToString(html);
+
+                VideoWebView.CoreWebView2.DOMContentLoaded += async (sender, args) =>
+                {
+                    AddDebugMessage("DOM загружен, внедряем JavaScript...");
+                    await InjectJavaScript();
+                };
+
+                VideoWebView.CoreWebView2.WebMessageReceived += OnWebMessageReceived;
+
+                VideoWebView.CoreWebView2.NavigationCompleted += (sender, args) =>
+                {
+                    if (!args.IsSuccess)
+                    {
+                        AddDebugMessage($"Ошибка навигации: {args.WebErrorStatus}");
+                        LoadingText.Text = "❌ Ошибка загрузки видео";
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                AddDebugMessage($"Ошибка инициализации WebView2: {ex.Message}");
+                MessageBox.Show($"Ошибка инициализации видео: {ex.Message}",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private string GetVideoHtml()
+        {
+            return $@"
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body {{ margin: 0; padding: 0; background: #000; height: 100vh; overflow: hidden; }}
+                    iframe {{ width: 100%; height: 100%; border: none; }}
+                </style>
+            </head>
+            <body>
+                <iframe id='videoFrame' src='{_videoUrl}' allow='autoplay; fullscreen; picture-in-picture' 
+                        allowfullscreen='true'></iframe>
+            </body>
+            </html>";
+        }
+
+        private async Task InjectJavaScript()
+        {
+            string script = @"
+                function getVideoElement() {
+                    try {
+                        const iframe = document.getElementById('videoFrame');
+                        if (iframe && iframe.contentDocument) {
+                            const video = iframe.contentDocument.querySelector('video');
+                            if (video) return video;
+                        }
+                        const video = document.querySelector('video');
+                        if (video) return video;
+                    } catch(e) {
+                        console.log('Error finding video: ' + e.message);
+                    }
+                    return null;
+                }
+
+                window.chrome.webview.postMessage(JSON.stringify({ type: 'ready' }));
+
+                let lastTime = 0;
+                let lastPlaying = false;
+                
+                setInterval(() => {
+                    try {
+                        const video = getVideoElement();
+                        if (video) {
+                            const currentTime = video.currentTime;
+                            const isPlaying = !video.paused;
+                            
+                            if (Math.abs(currentTime - lastTime) > 0.1 || isPlaying !== lastPlaying) {
+                                lastTime = currentTime;
+                                lastPlaying = isPlaying;
+                                window.chrome.webview.postMessage(JSON.stringify({
+                                    type: 'timeupdate',
+                                    currentTime: currentTime,
+                                    isPlaying: isPlaying
+                                }));
+                            }
+                        }
+                    } catch(e) {
+                        console.log('Error: ' + e.message);
+                    }
+                }, 500);
+            ";
+
+            try
+            {
+                await VideoWebView.CoreWebView2.ExecuteScriptAsync(script);
+                _isVideoReady = true;
+                AddDebugMessage("JavaScript внедрен успешно");
+
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    LoadingText.Visibility = Visibility.Collapsed;
+                    PlayIcon.Visibility = Visibility.Collapsed;
+                });
+            }
+            catch (Exception ex)
+            {
+                AddDebugMessage($"Ошибка внедрения JavaScript: {ex.Message}");
+            }
+        }
+
+        private async void OnWebMessageReceived(object? sender, CoreWebView2WebMessageReceivedEventArgs args)
+        {
+            try
+            {
+                var message = args.TryGetWebMessageAsString();
+                if (string.IsNullOrEmpty(message)) return;
+
+                AddDebugMessage($"Получено сообщение из WebView: {message}");
+
+                using var doc = JsonDocument.Parse(message);
+                var root = doc.RootElement;
+                var type = root.GetProperty("type").GetString();
+
+                if (type == "ready")
+                {
+                    _isVideoReady = true;
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        LoadingText.Visibility = Visibility.Collapsed;
+                        PlayIcon.Visibility = Visibility.Collapsed;
+                    });
+                    AddDebugMessage("Видео готово к воспроизведению");
+
+                    // Если мы гость, запрашиваем текущее состояние
+                    if (!_isHost)
+                    {
+                        await GetRoomState();
+                    }
+                }
+                else if (type == "timeupdate")
+                {
+                    var currentTime = root.GetProperty("currentTime").GetDouble();
+                    var isPlaying = root.GetProperty("isPlaying").GetBoolean();
+
+                    _currentTime = currentTime;
+                    _isPlaying = isPlaying;
+
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        PlayPauseButton.Content = isPlaying ? "⏸" : "▶";
+                    });
+
+                    if (_isHost && !_isSyncing && _webSocket?.State == WebSocketState.Open)
+                    {
+                        await SendSync();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                AddDebugMessage($"Ошибка обработки сообщения: {ex.Message}");
+            }
+        }
+
+        private async Task ConnectWebSocket()
+        {
+            try
+            {
+                AddDebugMessage($"Подключение к WebSocket...");
+
+                string wsUrl = $"ws://192.168.133.7:8002/ws/{_roomId}/{_userData.UserId}";
+                AddDebugMessage($"URL: {wsUrl}");
+
                 _webSocket = new ClientWebSocket();
-                await _webSocket.ConnectAsync(new Uri($"ws://localhost:8002/ws/{_roomId}/{_userData.UserId}"), CancellationToken.None);
+
+                using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+                await _webSocket.ConnectAsync(new Uri(wsUrl), cts.Token);
 
                 if (_webSocket.State == WebSocketState.Open)
                 {
-                    Console.WriteLine("WebSocket connected!");
+                    AddDebugMessage("✅ WebSocket подключен успешно!");
                     _ = Task.Run(ReceiveMessages);
 
                     _pingTimer = new Timer(async _ =>
@@ -72,17 +285,78 @@ namespace filamri
                             {
                                 var pingMsg = JsonSerializer.Serialize(new { type = "ping" });
                                 var bytes = Encoding.UTF8.GetBytes(pingMsg);
-                                await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                                await _webSocket.SendAsync(
+                                    new ArraySegment<byte>(bytes),
+                                    WebSocketMessageType.Text,
+                                    true,
+                                    CancellationToken.None);
                             }
                             catch { }
                         }
                     }, null, 30000, 30000);
+
+                    // Запрашиваем состояние комнаты
+                    await GetRoomState();
+                }
+                else
+                {
+                    AddDebugMessage($"❌ WebSocket не открыт. Состояние: {_webSocket.State}");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"WebSocket error: {ex.Message}");
-                MessageBox.Show($"Ошибка подключения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                AddDebugMessage($"❌ Ошибка WebSocket: {ex.Message}");
+                await Dispatcher.InvokeAsync(() =>
+                {
+                    MessageBox.Show(
+                        $"Не удалось подключиться к серверу совместного просмотра.\n\n" +
+                        $"Убедитесь, что сервер на порту 8002 запущен.\n\n" +
+                        $"Ошибка: {ex.Message}",
+                        "Ошибка подключения",
+                        MessageBoxButton.OK,
+                        MessageBoxImage.Error);
+                    PartnerInfoText.Text = "❌ Ошибка подключения к серверу";
+                });
+            }
+        }
+
+        private async Task GetRoomState()
+        {
+            try
+            {
+                AddDebugMessage($"Запрос состояния комнаты {_roomId}...");
+                var response = await _httpClient.GetAsync($"/api/room/{_roomId}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var json = await response.Content.ReadAsStringAsync();
+                    AddDebugMessage($"Состояние комнаты: {json}");
+
+                    using var doc = JsonDocument.Parse(json);
+                    var root = doc.RootElement;
+
+                    var isPlaying = root.GetProperty("isPlaying").GetBoolean();
+                    var currentTime = root.GetProperty("currentTime").GetDouble();
+
+                    _isPlaying = isPlaying;
+                    _currentTime = currentTime;
+
+                    await Dispatcher.InvokeAsync(() =>
+                    {
+                        PlayPauseButton.Content = isPlaying ? "⏸" : "▶";
+                    });
+
+                    await SyncVideoPosition(currentTime, isPlaying);
+                    AddDebugMessage($"Установлено состояние: isPlaying={isPlaying}, time={currentTime}");
+                }
+                else
+                {
+                    AddDebugMessage($"Ошибка получения состояния: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                AddDebugMessage($"Ошибка получения состояния: {ex.Message}");
             }
         }
 
@@ -98,13 +372,13 @@ namespace filamri
                     if (result.MessageType == WebSocketMessageType.Text)
                     {
                         var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
-                        Console.WriteLine($"Received: {message}");
+                        AddDebugMessage($"Получено сообщение: {message}");
 
                         using var doc = JsonDocument.Parse(message);
                         var root = doc.RootElement;
                         var type = root.GetProperty("type").GetString();
 
-                        await Dispatcher.InvokeAsync(() =>
+                        await Dispatcher.InvokeAsync(async () =>
                         {
                             if (type == "init")
                             {
@@ -113,7 +387,9 @@ namespace filamri
                                 _isPlaying = isPlaying;
                                 _currentTime = currentTime;
                                 PlayPauseButton.Content = isPlaying ? "⏸" : "▶";
-                                Console.WriteLine($"Init: isPlaying={isPlaying}, time={currentTime}");
+
+                                await SyncVideoPosition(currentTime, isPlaying);
+                                AddDebugMessage($"Init: isPlaying={isPlaying}, time={currentTime}");
                             }
                             else if (type == "sync")
                             {
@@ -122,10 +398,15 @@ namespace filamri
 
                                 if (!_isSyncing)
                                 {
+                                    _isSyncing = true;
                                     _isPlaying = isPlaying;
                                     _currentTime = currentTime;
                                     PlayPauseButton.Content = isPlaying ? "⏸" : "▶";
-                                    Console.WriteLine($"Sync: isPlaying={isPlaying}, time={currentTime}");
+
+                                    await SyncVideoPosition(currentTime, isPlaying);
+
+                                    _isSyncing = false;
+                                    AddDebugMessage($"Sync: isPlaying={isPlaying}, time={currentTime}");
                                 }
                             }
                             else if (type == "guest_joined")
@@ -134,13 +415,18 @@ namespace filamri
                                 PartnerInfoText.Text = $"👥 С кем: {guestName}";
                                 LoadingText.Visibility = Visibility.Collapsed;
                                 PlayIcon.Visibility = Visibility.Collapsed;
-                                Console.WriteLine($"Guest joined: {guestName}");
+
+                                if (_isHost && _isVideoReady)
+                                {
+                                    await SendSync();
+                                }
+                                AddDebugMessage($"Гость подключился: {guestName}");
                             }
                             else if (type == "guest_left")
                             {
                                 PartnerInfoText.Text = "⏳ Ожидание подключения партнера...";
                                 LoadingText.Visibility = Visibility.Visible;
-                                Console.WriteLine("Guest left");
+                                AddDebugMessage("Гость отключился");
                             }
                             else if (type == "chat")
                             {
@@ -152,17 +438,113 @@ namespace filamri
                             }
                             else if (type == "pong")
                             {
-                                Console.WriteLine("Pong received");
+                                AddDebugMessage("Pong получен");
                             }
                         });
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Receive error: {ex.Message}");
+                    AddDebugMessage($"Ошибка получения сообщения: {ex.Message}");
                     break;
                 }
             }
+        }
+
+        private async Task SyncVideoPosition(double position, bool isPlaying)
+        {
+            if (!_isVideoReady) return;
+
+            string script = $@"
+                (function() {{
+                    try {{
+                        const iframe = document.getElementById('videoFrame');
+                        let video = null;
+                        if (iframe && iframe.contentDocument) {{
+                            video = iframe.contentDocument.querySelector('video');
+                        }}
+                        if (!video) {{
+                            video = document.querySelector('video');
+                        }}
+                        if (video) {{
+                            video.currentTime = {position.ToString(System.Globalization.CultureInfo.InvariantCulture)};
+                            {(isPlaying ? "video.play()" : "video.pause()")};
+                        }}
+                    }} catch(e) {{
+                        console.log('Sync error: ' + e.message);
+                    }}
+                }})();
+            ";
+
+            try
+            {
+                await VideoWebView.CoreWebView2.ExecuteScriptAsync(script);
+                AddDebugMessage($"Синхронизировано: position={position}, isPlaying={isPlaying}");
+            }
+            catch (Exception ex)
+            {
+                AddDebugMessage($"Ошибка синхронизации видео: {ex.Message}");
+            }
+        }
+
+        private async Task SendSync()
+        {
+            if (_webSocket?.State != WebSocketState.Open) return;
+
+            var syncMsg = new
+            {
+                type = "sync",
+                isPlaying = _isPlaying,
+                currentTime = _currentTime
+            };
+
+            var json = JsonSerializer.Serialize(syncMsg);
+            var bytes = Encoding.UTF8.GetBytes(json);
+            await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            AddDebugMessage($"Отправлен sync: isPlaying={_isPlaying}, time={_currentTime}");
+        }
+
+        private async void PlayPauseButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!_isVideoReady)
+            {
+                AddDebugMessage("Видео еще не готово");
+                return;
+            }
+
+            if (_webSocket?.State != WebSocketState.Open)
+            {
+                AddDebugMessage("WebSocket не открыт, переподключаемся...");
+                await ConnectWebSocket();
+                if (_webSocket?.State != WebSocketState.Open)
+                {
+                    AddDebugMessage("Не удалось переподключиться!");
+                    MessageBox.Show("Нет соединения с сервером. Проверьте подключение.",
+                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+
+            _isSyncing = true;
+            _isPlaying = !_isPlaying;
+            PlayPauseButton.Content = _isPlaying ? "⏸" : "▶";
+
+            string script = _isPlaying ?
+                @"(function() { try { const iframe = document.getElementById('videoFrame'); let video = null; if (iframe && iframe.contentDocument) { video = iframe.contentDocument.querySelector('video'); } if (!video) { video = document.querySelector('video'); } if (video) video.play(); } catch(e) { console.log(e); } })();" :
+                @"(function() { try { const iframe = document.getElementById('videoFrame'); let video = null; if (iframe && iframe.contentDocument) { video = iframe.contentDocument.querySelector('video'); } if (!video) { video = document.querySelector('video'); } if (video) video.pause(); } catch(e) { console.log(e); } })();";
+
+            try
+            {
+                await VideoWebView.CoreWebView2.ExecuteScriptAsync(script);
+                await SendSync();
+                AddDebugMessage($"Play/Pause: isPlaying={_isPlaying}");
+            }
+            catch (Exception ex)
+            {
+                AddDebugMessage($"Ошибка Play/Pause: {ex.Message}");
+            }
+
+            _isSyncing = false;
         }
 
         private void AddMessageToChat(string userName, string text, string time)
@@ -182,57 +564,19 @@ namespace filamri
             });
 
             MessagesScrollViewer.ScrollToBottom();
+            AddDebugMessage($"Сообщение в чат от {userName}: {text}");
         }
 
-        private async void InitializeWebView()
+        private void AddDebugMessage(string message)
         {
-            await VideoWebView.EnsureCoreWebView2Async();
+            Console.WriteLine($"[WatchParty] {DateTime.Now:HH:mm:ss} - {message}");
 
-            string html = $@"
-            <!DOCTYPE html>
-            <html>
-            <head>
-                <style>
-                    body {{ margin: 0; padding: 0; background: #000; height: 100vh; overflow: hidden; }}
-                    iframe {{ width: 100%; height: 100%; border: none; }}
-                </style>
-            </head>
-            <body>
-                <iframe src='{_videoUrl}' allow='autoplay; fullscreen; picture-in-picture' 
-                        allowfullscreen='true'></iframe>
-            </body>
-            </html>";
-
-            VideoWebView.NavigateToString(html);
-            LoadingText.Visibility = Visibility.Collapsed;
-            PlayIcon.Visibility = Visibility.Collapsed;
-        }
-
-        private async void PlayPauseButton_Click(object sender, RoutedEventArgs e)
-        {
-            _isSyncing = true;
-            _isPlaying = !_isPlaying;
-            PlayPauseButton.Content = _isPlaying ? "⏸" : "▶";
-
-            await SendSync();
-            _isSyncing = false;
-        }
-
-        private async Task SendSync()
-        {
-            if (_webSocket?.State != WebSocketState.Open) return;
-
-            var syncMsg = new
+            Dispatcher.InvokeAsync(() =>
             {
-                type = "sync",
-                isPlaying = _isPlaying,
-                currentTime = _currentTime
-            };
-
-            var json = JsonSerializer.Serialize(syncMsg);
-            var bytes = Encoding.UTF8.GetBytes(json);
-            await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
-            Console.WriteLine($"Sent sync: isPlaying={_isPlaying}, time={_currentTime}");
+                DebugConsole.Text = $"{DateTime.Now:HH:mm:ss} - {message}\n{DebugConsole.Text}";
+                if (DebugConsole.Text.Length > 5000)
+                    DebugConsole.Text = DebugConsole.Text.Substring(0, 5000);
+            });
         }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
@@ -253,6 +597,13 @@ namespace filamri
             string text = MessageTextBox.Text.Trim();
             if (string.IsNullOrEmpty(text)) return;
 
+            if (_webSocket?.State != WebSocketState.Open)
+            {
+                AddDebugMessage("WebSocket не открыт, сообщение не отправлено");
+                MessageBox.Show("Нет соединения с сервером.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             var chatMsg = new
             {
                 type = "chat",
@@ -263,8 +614,10 @@ namespace filamri
 
             var json = JsonSerializer.Serialize(chatMsg);
             var bytes = Encoding.UTF8.GetBytes(json);
+
             await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
             MessageTextBox.Clear();
+            AddDebugMessage($"Отправлено сообщение: {text}");
         }
 
         private async void ExitButton_Click(object sender, RoutedEventArgs e)
@@ -272,8 +625,12 @@ namespace filamri
             _pingTimer?.Dispose();
             if (_webSocket != null)
             {
-                await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed", CancellationToken.None);
-                _webSocket.Dispose();
+                try
+                {
+                    await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed", CancellationToken.None);
+                    _webSocket.Dispose();
+                }
+                catch { }
             }
             Close();
         }
@@ -281,6 +638,7 @@ namespace filamri
         protected override void OnClosed(EventArgs e)
         {
             _pingTimer?.Dispose();
+            _webSocket?.Dispose();
             base.OnClosed(e);
         }
     }

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Filamri")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bc265c2f2660a377dcbbe034fdb5b39a9028af4c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6c74998f28038601b2b359a9c5e8c3846e54d923")]
 [assembly: System.Reflection.AssemblyProductAttribute("Filamri")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Filamri")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

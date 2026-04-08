@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "D:\\weather\\Filmari\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|d:\\weather\\filmari\\filamri\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|solutionrelative:filamri\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|d:\\weather\\filmari\\filamri\\watchpartywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|solutionrelative:filamri\\watchpartywindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|d:\\weather\\filmari\\filamri\\watchpartywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|solutionrelative:filamri\\watchpartywindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|d:\\weather\\filmari\\filamri\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|solutionrelative:filamri\\moviematchwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{6E6B5956-AC6F-4EAD-8C51-ED49292E31AA}|Filamri\\Filamri.csproj|d:\\weather\\filmari\\filamri\\moviematchwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
@@ -106,7 +106,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 13,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
@@ -121,8 +121,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\CollectionDetailWindow.xaml",
               "RelativeToolTip": "Filamri\\CollectionDetailWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-08T07:01:57.055Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-08T07:01:57.055Z"
             },
             {
               "$type": "Document",
@@ -133,8 +132,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\CollectionsWindow.xaml",
               "RelativeToolTip": "Filamri\\CollectionsWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-08T07:01:55.506Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-08T07:01:55.506Z"
             },
             {
               "$type": "Document",
@@ -145,8 +143,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\CollectionViewWindow.xaml",
               "RelativeToolTip": "Filamri\\CollectionViewWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-08T07:01:53.407Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-08T07:01:53.407Z"
             },
             {
               "$type": "Document",
@@ -162,20 +159,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "WatchPartyWindow.xaml.cs",
               "DocumentMoniker": "D:\\weather\\Filmari\\Filamri\\WatchPartyWindow.xaml.cs",
               "RelativeDocumentMoniker": "Filamri\\WatchPartyWindow.xaml.cs",
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\WatchPartyWindow.xaml.cs",
               "RelativeToolTip": "Filamri\\WatchPartyWindow.xaml.cs",
-              "ViewState": "AQIAAPwAAAAAAAAAAAAuwCUBAAABAAAA",
+              "ViewState": "AQIAAO8AAAAAAAAAAAAAwAoBAAAzAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-08T05:54:05.272Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "WatchPartyWindow.xaml",
               "DocumentMoniker": "D:\\weather\\Filmari\\Filamri\\WatchPartyWindow.xaml",
               "RelativeDocumentMoniker": "Filamri\\WatchPartyWindow.xaml",
@@ -218,8 +215,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\ProfileWindow.xaml",
               "RelativeToolTip": "Filamri\\ProfileWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-07T06:01:00.622Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-07T06:01:00.622Z"
             },
             {
               "$type": "Document",
@@ -254,18 +250,17 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\MatchSwipeWindow.xaml",
               "RelativeToolTip": "Filamri\\MatchSwipeWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-06T06:51:36.751Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-06T06:51:36.751Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "MovieMatchWindow.xaml.cs",
               "DocumentMoniker": "D:\\weather\\Filmari\\Filamri\\MovieMatchWindow.xaml.cs",
               "RelativeDocumentMoniker": "Filamri\\MovieMatchWindow.xaml.cs",
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\MovieMatchWindow.xaml.cs",
               "RelativeToolTip": "Filamri\\MovieMatchWindow.xaml.cs",
-              "ViewState": "AQIAAMQAAAAAAAAAAAAuwO0AAAABAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAABDAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-06T05:55:35.757Z",
               "EditorCaption": ""
@@ -303,8 +298,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\MainWindow.xaml",
               "RelativeToolTip": "Filamri\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-02T06:30:06.828Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T06:30:06.828Z"
             },
             {
               "$type": "Document",
@@ -327,8 +321,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\FilmDetailWindow.xaml",
               "RelativeToolTip": "Filamri\\FilmDetailWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-02T06:24:24.703Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-02T06:24:24.703Z"
             },
             {
               "$type": "Document",
@@ -399,8 +392,7 @@
               "ToolTip": "D:\\weather\\Filmari\\Filamri\\CommentsWindow.xaml",
               "RelativeToolTip": "Filamri\\CommentsWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-01T10:03:07.77Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-01T10:03:07.77Z"
             }
           ]
         }
