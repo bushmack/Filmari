@@ -60,7 +60,7 @@ namespace filamri {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Filamri;V1.0.0.0;component/selectcollectionwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Filamri;component/selectcollectionwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\SelectCollectionWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

@@ -35,9 +35,6 @@
     <Compile Update="MovieMatchWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Pages\MovieMatchPage.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="ProfileWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

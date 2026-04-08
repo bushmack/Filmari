@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET8_0;NETCOREAPP
 D:\weather\Filmari\Filamri\App.xaml
-16-662073486
-
-32-2057101602
-198-635017904
-CollectionDetailWindow.xaml;CollectionsWindow.xaml;CollectionViewWindow.xaml;CommentsWindow.xaml;Dialogs\CombinedSearchDialog.xaml;Dialogs\FilterDialog.xaml;Dialogs\InputDialog.xaml;FilmDetailWindow.xaml;MainWindow.xaml;MatchSwipeWindow.xaml;MovieMatchWindow.xaml;Pages\MovieMatchPage.xaml;ProfileWindow.xaml;SelectCollectionWindow.xaml;Views\FilmControl.xaml;WatchPartyWindow.xaml;
+15-416152799
+31989977634
+32-724516992
+201458439241
+CollectionDetailWindow.xaml;CollectionsWindow.xaml;CollectionViewWindow.xaml;CommentsWindow.xaml;Dialogs\CombinedSearchDialog.xaml;Dialogs\FilterDialog.xaml;Dialogs\InputDialog.xaml;FilmDetailWindow.xaml;MainWindow.xaml;MatchSwipeWindow.xaml;MovieMatchWindow.xaml;ProfileWindow.xaml;SelectCollectionWindow.xaml;Views\FilmControl.xaml;WatchPartyWindow.xaml;
 
 False
 

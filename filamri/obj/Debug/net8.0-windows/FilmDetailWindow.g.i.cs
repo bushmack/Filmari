@@ -188,7 +188,7 @@ namespace filamri {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Filamri;V1.0.0.0;component/filmdetailwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Filamri;component/filmdetailwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\FilmDetailWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

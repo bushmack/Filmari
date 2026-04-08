@@ -10,7 +10,7 @@ namespace filamri.Models
         public string HostName { get; set; } = "";
         public string GuestId { get; set; } = "";
         public string GuestName { get; set; } = "";
-        public string VideoPath { get; set; } = "";
+        public string VideoUrl { get; set; } = "";  // Вместо VideoPath
         public double CurrentPosition { get; set; } = 0;
         public bool IsPlaying { get; set; } = false;
         public string Status { get; set; } = "waiting";

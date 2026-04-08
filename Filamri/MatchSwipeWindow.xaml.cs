@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows;
 using System.Windows.Media.Imaging;
+using System.Net.Http;
+using System.Text.Json;
 
 namespace filamri
 {
     public partial class MatchSwipeWindow : Window
     {
-        private readonly ApiService _apiService = new();
+        private readonly HttpClient _httpClient = new();
         private Timer? _statusTimer;
         private string _roomId;
         private string _userId;
@@ -38,8 +40,12 @@ namespace filamri
             {
                 try
                 {
-                    var status = await _apiService.GetRoomStatus(_roomId);
-                    await Dispatcher.InvokeAsync(() => UpdateUI(status));
+                    var response = await _httpClient.GetAsync($"http://localhost:8001/api/match/room-status/{_roomId}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var json = await response.Content.ReadAsStringAsync();
+                        await Dispatcher.InvokeAsync(() => UpdateUI(json));
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -48,27 +54,70 @@ namespace filamri
             }, null, 0, 2000);
         }
 
-        private void UpdateUI(MatchRoomResponse? status)
+        private void UpdateUI(string json)
         {
-            if (status == null) return;
-
-            if (status.status == "watching")
+            try
             {
-                if (_movies.Count == 0 && status.currentMovies != null && status.currentMovies.Count > 0)
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                string status = root.GetProperty("status").GetString() ?? "";
+
+                if (status == "watching")
                 {
-                    _movies = status.currentMovies;
-                    _currentIndex = status.currentMovieIndex;
-                    ShowCurrentMovie();
-                }
+                    if (_movies.Count == 0 && root.TryGetProperty("currentMovies", out var moviesProp))
+                    {
+                        _movies.Clear();
+                        foreach (var movie in moviesProp.EnumerateArray())
+                        {
+                            var film = new Film();
+                            if (movie.TryGetProperty("Id", out var idProp)) film.Id = idProp.GetInt32();
+                            if (movie.TryGetProperty("Name", out var nameProp)) film.Name = nameProp.GetString() ?? "";
+                            if (movie.TryGetProperty("Description", out var descProp)) film.Description = descProp.GetString() ?? "";
+                            if (movie.TryGetProperty("PosterUrl", out var posterProp)) film.PosterUrl = posterProp.GetString() ?? "";
+                            if (movie.TryGetProperty("Year", out var yearProp)) film.Year = yearProp.GetInt32();
+                            if (movie.TryGetProperty("Genre", out var genreProp)) film.Genre = genreProp.GetString() ?? "";
+                            if (movie.TryGetProperty("Rating", out var ratingProp)) film.Rating = ratingProp.GetDouble();
+                            if (movie.TryGetProperty("GenresString", out var genresProp)) film.GenresString = genresProp.GetString() ?? "";
+                            if (movie.TryGetProperty("Country", out var countryProp)) film.Country = countryProp.GetString() ?? "";
+                            if (movie.TryGetProperty("MovieLength", out var lengthProp)) film.MovieLength = lengthProp.GetInt32();
+                            if (movie.TryGetProperty("Actors", out var actorsProp))
+                            {
+                                film.Actors = new List<string>();
+                                foreach (var actor in actorsProp.EnumerateArray())
+                                {
+                                    film.Actors.Add(actor.GetString() ?? "");
+                                }
+                            }
+                            _movies.Add(film);
+                        }
 
-                CounterText.Text = $"{_currentIndex + 1} из {_movies.Count}";
-                PartnerStatusText.Text = "⏳ Ожидание выбора партнера...";
+                        if (root.TryGetProperty("currentMovieIndex", out var indexProp))
+                            _currentIndex = indexProp.GetInt32();
+
+                        ShowCurrentMovie();
+                    }
+
+                    CounterText.Text = $"{_currentIndex + 1} из {_movies.Count}";
+                    PartnerStatusText.Text = "⏳ Ожидание выбора партнера...";
+                }
+                else if (status == "matched" && !_isMatchFound)
+                {
+                    _isMatchFound = true;
+                    _statusTimer?.Dispose();
+
+                    if (root.TryGetProperty("matchedFilm", out var matchedProp))
+                    {
+                        var film = new Film();
+                        if (matchedProp.TryGetProperty("Name", out var nameProp)) film.Name = nameProp.GetString() ?? "Фильм";
+                        if (matchedProp.TryGetProperty("Description", out var descProp)) film.Description = descProp.GetString() ?? "";
+                        ShowMatchScreen(film);
+                    }
+                }
             }
-            else if (status.status == "matched" && !_isMatchFound && status.matchedFilm != null)
+            catch (Exception ex)
             {
-                _isMatchFound = true;
-                _statusTimer?.Dispose();
-                ShowMatchScreen(status.matchedFilm);
+                System.Diagnostics.Debug.WriteLine($"UpdateUI error: {ex.Message}");
             }
         }
 
@@ -131,23 +180,50 @@ namespace filamri
 
             try
             {
-                var result = await _apiService.SendSwipe(_roomId, _userId, currentMovie.Id, liked);
+                var request = new
+                {
+                    room_id = _roomId,
+                    user_id = _userId,
+                    movie_id = currentMovie.Id,
+                    liked = liked
+                };
 
-                if (result != null && result.isMatchFound && result.matchedFilm != null)
+                var content = new StringContent(JsonSerializer.Serialize(request), System.Text.Encoding.UTF8, "application/json");
+                var response = await _httpClient.PostAsync("http://localhost:8001/api/match/swipe", content);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    _isMatchFound = true;
-                    _statusTimer?.Dispose();
-                    ShowMatchScreen(result.matchedFilm);
-                }
-                else
-                {
-                    if (_currentIndex + 1 < _movies.Count)
+                    var json = await response.Content.ReadAsStringAsync();
+                    using var doc = JsonDocument.Parse(json);
+                    var root = doc.RootElement;
+
+                    bool isMatchFound = false;
+                    if (root.TryGetProperty("is_match_found", out var matchProp))
+                        isMatchFound = matchProp.GetBoolean();
+
+                    if (isMatchFound)
                     {
-                        _currentIndex++;
-                        ShowCurrentMovie();
-                        CounterText.Text = $"{_currentIndex + 1} из {_movies.Count}";
+                        _isMatchFound = true;
+                        _statusTimer?.Dispose();
+
+                        if (root.TryGetProperty("matched_film", out var matchedProp))
+                        {
+                            var film = new Film();
+                            if (matchedProp.TryGetProperty("Name", out var nameProp)) film.Name = nameProp.GetString() ?? "Фильм";
+                            if (matchedProp.TryGetProperty("Description", out var descProp)) film.Description = descProp.GetString() ?? "";
+                            ShowMatchScreen(film);
+                        }
                     }
-                    PartnerStatusText.Text = "⏳ Ожидание выбора партнера...";
+                    else
+                    {
+                        if (_currentIndex + 1 < _movies.Count)
+                        {
+                            _currentIndex++;
+                            ShowCurrentMovie();
+                            CounterText.Text = $"{_currentIndex + 1} из {_movies.Count}";
+                        }
+                        PartnerStatusText.Text = "⏳ Ожидание выбора партнера...";
+                    }
                 }
             }
             catch (Exception ex)
@@ -190,7 +266,11 @@ namespace filamri
         private async void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             _statusTimer?.Dispose();
-            try { await _apiService.LeaveRoom(_roomId, _userId); } catch { }
+            try
+            {
+                await _httpClient.DeleteAsync($"http://localhost:8001/api/match/leave-room/{_roomId}/{_userId}");
+            }
+            catch { }
             Close();
         }
 

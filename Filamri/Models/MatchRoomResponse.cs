@@ -11,7 +11,6 @@ namespace filamri.Models
         public int currentMovieIndex { get; set; }
         public bool isMatchFound { get; set; }
         public Film? matchedFilm { get; set; }
-        public object? current_movie_swipes { get; set; }
     }
 
     public class MatchUserResponse

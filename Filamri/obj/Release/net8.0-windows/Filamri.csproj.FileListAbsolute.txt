@@ -15,7 +15,6 @@ D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\FilmDetailWindow.baml
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\MainWindow.baml
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\MatchSwipeWindow.baml
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\MovieMatchWindow.baml
-D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Pages\MovieMatchPage.baml
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\ProfileWindow.baml
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\SelectCollectionWindow.baml
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Views\FilmControl.baml
@@ -32,7 +31,6 @@ D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\FilmDetailWindow.g.cs
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\MainWindow.g.cs
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\MatchSwipeWindow.g.cs
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\MovieMatchWindow.g.cs
-D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Pages\MovieMatchPage.g.cs
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\ProfileWindow.g.cs
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\SelectCollectionWindow.g.cs
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Views\FilmControl.g.cs
@@ -50,3 +48,15 @@ D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\refint\Filamri.dll
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Filamri.pdb
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Filamri.genruntimeconfig.cache
 D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\ref\Filamri.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\runtimes\win-x86\native\WebView2Loader.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\runtimes\win-x64\native\WebView2Loader.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\runtimes\win-arm64\native\WebView2Loader.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\Microsoft.Web.WebView2.Core.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\Microsoft.Web.WebView2.WinForms.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\Microsoft.Web.WebView2.Wpf.dll
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\Microsoft.Web.WebView2.Core.xml
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\Microsoft.Web.WebView2.WinForms.xml
+D:\weather\Filmari\Filamri\bin\Release\net8.0-windows\Microsoft.Web.WebView2.Wpf.xml
+D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Filamri.csproj.AssemblyReference.cache
+D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Filamri_Content.g.cs
+D:\weather\Filmari\Filamri\obj\Release\net8.0-windows\Filamri.csproj.Up2Date

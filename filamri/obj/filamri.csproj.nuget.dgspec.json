@@ -46,6 +46,10 @@
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
           "dependencies": {
+            "Microsoft.Web.WebView2": {
+              "target": "Package",
+              "version": "[1.0.3856.49, )"
+            },
             "System.Net.Http.Json": {
               "target": "Package",
               "version": "[8.0.0, )"

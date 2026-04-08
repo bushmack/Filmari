@@ -10,7 +10,6 @@
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <!-- Стиль для скругленных TextBox -->
         <Style x:Key="RoundedTextBox" TargetType="TextBox">
             <Setter Property="Padding" Value="8"/>
             <Setter Property="Background" Value="White"/>
@@ -31,76 +30,6 @@
             </Setter>
         </Style>
 
-        <!-- Стиль для скругленных ComboBox -->
-        <Style x:Key="RoundedComboBox" TargetType="ComboBox">
-            <Setter Property="Padding" Value="8"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#FD79A8"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ComboBox">
-                        <Grid>
-                            <Border x:Name="border" 
-                                    Background="{TemplateBinding Background}"
-                                    BorderBrush="{TemplateBinding BorderBrush}"
-                                    BorderThickness="{TemplateBinding BorderThickness}"
-                                    CornerRadius="10">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <ContentPresenter x:Name="contentPresenter" 
-                                                    Grid.Column="0"
-                                                    Margin="6,2"
-                                                    Content="{TemplateBinding SelectionBoxItem}"
-                                                    VerticalAlignment="Center"/>
-                                    <ToggleButton x:Name="toggleButton" 
-                                                  Grid.Column="1"
-                                                  Width="20"
-                                                  Height="20"
-                                                  Margin="2"
-                                                  Background="Transparent"
-                                                  BorderThickness="0"
-                                                  IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
-                                        <ToggleButton.Template>
-                                            <ControlTemplate TargetType="ToggleButton">
-                                                <Border Background="Transparent">
-                                                    <TextBlock Text="▼" 
-                                                               FontSize="10"
-                                                               HorizontalAlignment="Center"
-                                                               VerticalAlignment="Center"/>
-                                                </Border>
-                                            </ControlTemplate>
-                                        </ToggleButton.Template>
-                                    </ToggleButton>
-                                </Grid>
-                            </Border>
-                            <Popup x:Name="PART_Popup" 
-                                   IsOpen="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
-                                   Placement="Bottom"
-                                   HorizontalOffset="0"
-                                   VerticalOffset="2">
-                                <Border Background="White"
-                                        BorderBrush="#FD79A8"
-                                        BorderThickness="1"
-                                        CornerRadius="5"
-                                        MaxHeight="200"
-                                        Width="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
-                                    <ScrollViewer>
-                                        <ItemsPresenter Margin="2"/>
-                                    </ScrollViewer>
-                                </Border>
-                            </Popup>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <!-- Стиль для неоновых кнопок -->
         <Style x:Key="NeonButton" TargetType="Button">
             <Setter Property="Height" Value="60"/>
             <Setter Property="FontSize" Value="18"/>
@@ -140,21 +69,12 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
-        <!-- Стиль для карточек -->
-        <Style x:Key="GlassCard" TargetType="Border">
-            <Setter Property="Background" Value="#CCFFFFFF"/>
-            <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="Margin" Value="0,0,0,15"/>
-            <Setter Property="Padding" Value="15"/>
-        </Style>
     </Window.Resources>
 
     <Border Background="#CC2D3436" CornerRadius="30" Margin="20" Padding="25">
-        <ScrollViewer VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled">
-            <StackPanel Margin="0">
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
 
-                <!-- Заголовок -->
                 <TextBlock Text="🎬 Совместный просмотр" 
                            FontSize="32" 
                            FontWeight="Bold" 
@@ -163,7 +83,7 @@
                            Foreground="White"/>
 
                 <!-- ГЛАВНОЕ МЕНЮ -->
-                <Grid x:Name="MainMenu" Margin="0,0,0,0">
+                <Grid x:Name="MainMenu">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="*"/>
@@ -171,7 +91,7 @@
 
                     <Button Grid.Row="0" 
                             x:Name="WatchTogetherButton"
-                            Content="🎥 Смотреть вместе (уже есть фильм)" 
+                            Content="🎥 Смотреть вместе" 
                             Background="#00B894"
                             Style="{StaticResource NeonButton}"
                             Margin="50,0,50,20"
@@ -225,6 +145,47 @@
                         </Grid>
                     </StackPanel>
 
+                    <!-- Панель создания комнаты -->
+                    <Grid x:Name="CreateWatchRoomPanel" Grid.Row="1" Visibility="Visible">
+                        <StackPanel VerticalAlignment="Center" Margin="50">
+                            <TextBlock Text="🔗 Введите ссылку на видео" 
+                                       FontSize="18" 
+                                       FontWeight="Bold" 
+                                       Foreground="White"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,20"/>
+
+                            <TextBox x:Name="VideoUrlTextBox" 
+                                     Height="45"
+                                     Margin="0,0,0,15"
+                                     Padding="15"
+                                     FontSize="14"
+                                     Background="White"
+                                     Foreground="Black"
+                                     BorderBrush="#6C5CE7"
+                                     BorderThickness="2"
+                                     TextChanged="VideoUrlTextBox_TextChanged"/>
+
+                            <TextBlock Text="Поддерживаются: YouTube, VK Video, RuTube"
+                                       FontSize="11"
+                                       Foreground="#888888"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,0,0,20"
+                                       TextWrapping="Wrap"/>
+
+                            <Button x:Name="CreateRoomFromUrlButton" 
+                                    Content="🎬 Создать комнату" 
+                                    Height="50"
+                                    Width="250"
+                                    Background="#00B894"
+                                    Style="{StaticResource SmallButton}"
+                                    HorizontalAlignment="Center"
+                                    IsEnabled="False"
+                                    Click="CreateRoomFromUrl_Click"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- Панель подключения -->
                     <StackPanel x:Name="JoinWatchRoomPanel" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Center">
                         <TextBlock Text="🔗 Введите ID комнаты" 
                                    FontSize="16" 
@@ -240,7 +201,8 @@
                                  Background="White"
                                  Foreground="Black"
                                  BorderBrush="#6C5CE7"
-                                 BorderThickness="2"/>
+                                 BorderThickness="2"
+                                 TextChanged="WatchRoomIdTextBox_TextChanged"/>
 
                         <Button x:Name="JoinWatchRoomButton" 
                                 Content="🔗 Подключиться" 
@@ -249,6 +211,7 @@
                                 Background="#00B894"
                                 Style="{StaticResource SmallButton}"
                                 HorizontalAlignment="Center"
+                                IsEnabled="False"
                                 Click="JoinWatchRoom_Click"/>
                     </StackPanel>
 
@@ -266,211 +229,30 @@
                             Click="BackToWatchMenu_Click"/>
                 </Grid>
 
-                <!-- РЕЖИМ "ИСКАТЬ ФИЛЬМ ВМЕСТЕ" - КАК В FILTERDIALOG -->
+                <!-- РЕЖИМ "ИСКАТЬ ФИЛЬМ ВМЕСТЕ" (заглушка) -->
                 <Grid x:Name="SearchTogetherGrid" Visibility="Collapsed">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                        <TextBlock Text="🔍 Искать фильм вместе" 
+                    <StackPanel>
+                        <TextBlock Text="🔍 Поиск фильмов вместе" 
                                    FontSize="24" 
                                    FontWeight="Bold" 
                                    Foreground="White"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,20"/>
-
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" 
-                                    x:Name="CreateMatchRoomButton"
-                                    Content="➕ Создать комнату" 
-                                    Background="#00B894"
-                                    Style="{StaticResource SmallButton}"
-                                    Margin="10,0,5,0"
-                                    Click="CreateMatchRoom_Click"/>
-
-                            <Button Grid.Column="1" 
-                                    x:Name="ShowJoinMatchRoomButton"
-                                    Content="🔗 Подключиться" 
-                                    Background="#6C5CE7"
-                                    Style="{StaticResource SmallButton}"
-                                    Margin="5,0,10,0"
-                                    Click="ShowJoinMatchRoom_Click"/>
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- Панель выбора жанров (как в FilterDialog) -->
-                    <Grid x:Name="CreateMatchRoomPanel" Grid.Row="1" Visibility="Collapsed">
-                        <Border Background="#CCFFFFFF" CornerRadius="20" Padding="20" Margin="0,0,0,15">
-                            <StackPanel>
-                                <TextBlock Text="🎭 Выберите жанры" 
-                                           FontSize="20" 
-                                           FontWeight="Bold" 
-                                           Foreground="#6C5CE7" 
-                                           Margin="0,0,0,15"
-                                           HorizontalAlignment="Center"/>
-
-                                <TextBox x:Name="GenreSearchBox" 
-                                         Style="{StaticResource RoundedTextBox}"
-                                         Margin="0,0,0,15"
-                                         TextChanged="GenreSearchBox_TextChanged"/>
-
-                                <Border Background="White" CornerRadius="15" Padding="10" Margin="0,0,0,15">
-                                    <ScrollViewer MaxHeight="200" VerticalScrollBarVisibility="Auto">
-                                        <WrapPanel x:Name="GenresPanel" HorizontalAlignment="Center">
-                                            <!-- Жанры будут добавлены динамически -->
-                                        </WrapPanel>
-                                    </ScrollViewer>
-                                </Border>
-
-                                <TextBlock Text="📅 Год выпуска" 
-                                           FontSize="18" 
-                                           FontWeight="Bold" 
-                                           Foreground="#00B894" 
-                                           Margin="0,0,0,15"
-                                           HorizontalAlignment="Center"/>
-
-                                <Grid Margin="0,0,0,20" HorizontalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#00B894" BorderThickness="2">
-                                        <TextBox x:Name="YearFromTextBox" 
-                                                 Width="120"
-                                                 Height="40"
-                                                 Text="1990"
-                                                 TextAlignment="Center"
-                                                 Background="Transparent"
-                                                 BorderThickness="0"
-                                                 FontSize="14"/>
-                                    </Border>
-
-                                    <TextBlock Grid.Column="1" 
-                                               Text="—" 
-                                               FontSize="24" 
-                                               FontWeight="Bold" 
-                                               Foreground="#00B894"
-                                               Margin="15,0"
-                                               VerticalAlignment="Center"/>
-
-                                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#00B894" BorderThickness="2">
-                                        <TextBox x:Name="YearToTextBox" 
-                                                 Width="120"
-                                                 Height="40"
-                                                 Text="2025"
-                                                 TextAlignment="Center"
-                                                 Background="Transparent"
-                                                 BorderThickness="0"
-                                                 FontSize="14"/>
-                                    </Border>
-                                </Grid>
-
-                                <TextBlock Text="⭐ Рейтинг" 
-                                           FontSize="18" 
-                                           FontWeight="Bold" 
-                                           Foreground="#FD79A8" 
-                                           Margin="0,0,0,15"
-                                           HorizontalAlignment="Center"/>
-
-                                <Grid Margin="0,0,0,20" HorizontalAlignment="Center">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <Border Grid.Column="0" Background="White" CornerRadius="10" BorderBrush="#FD79A8" BorderThickness="2">
-                                        <TextBox x:Name="RatingFromTextBox" 
-                                                 Width="120"
-                                                 Height="40"
-                                                 Text="5.0"
-                                                 TextAlignment="Center"
-                                                 Background="Transparent"
-                                                 BorderThickness="0"
-                                                 FontSize="14"/>
-                                    </Border>
-
-                                    <TextBlock Grid.Column="1" 
-                                               Text="—" 
-                                               FontSize="24" 
-                                               FontWeight="Bold" 
-                                               Foreground="#FD79A8"
-                                               Margin="15,0"
-                                               VerticalAlignment="Center"/>
-
-                                    <Border Grid.Column="2" Background="White" CornerRadius="10" BorderBrush="#FD79A8" BorderThickness="2">
-                                        <TextBox x:Name="RatingToTextBox" 
-                                                 Width="120"
-                                                 Height="40"
-                                                 Text="10.0"
-                                                 TextAlignment="Center"
-                                                 Background="Transparent"
-                                                 BorderThickness="0"
-                                                 FontSize="14"/>
-                                    </Border>
-                                </Grid>
-
-                                <Button x:Name="StartMatchSearchButton" 
-                                        Content="🚀 Начать поиск" 
-                                        Height="50"
-                                        Width="250"
-                                        Background="#6C5CE7"
-                                        Style="{StaticResource SmallButton}"
-                                        HorizontalAlignment="Center"
-                                        Click="StartMatchSearch_Click"/>
-                            </StackPanel>
-                        </Border>
-                    </Grid>
-
-                    <!-- Панель подключения -->
-                    <StackPanel x:Name="JoinMatchRoomPanel" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Center">
-                        <TextBlock Text="🔗 Введите ID комнаты" 
+                        <TextBlock Text="Функция в разработке..." 
                                    FontSize="16" 
-                                   Foreground="White"
+                                   Foreground="#888888"
                                    HorizontalAlignment="Center"
-                                   Margin="0,0,0,20"/>
-
-                        <TextBox x:Name="MatchRoomIdTextBox" 
-                                 Height="45"
-                                 Margin="50,0,50,15"
-                                 Padding="15"
-                                 FontSize="14"
-                                 Background="White"
-                                 Foreground="Black"
-                                 BorderBrush="#6C5CE7"
-                                 BorderThickness="2"/>
-
-                        <Button x:Name="JoinMatchRoomButton" 
-                                Content="🔗 Подключиться" 
-                                Height="45"
-                                Width="200"
-                                Background="#00B894"
-                                Style="{StaticResource SmallButton}"
+                                   Margin="0,50,0,50"/>
+                        <Button x:Name="BackToSearchMenuButton"
+                                Content="← Назад" 
                                 HorizontalAlignment="Center"
-                                Click="JoinMatchRoom_Click"/>
+                                Background="#FF4444"
+                                Foreground="White"
+                                Height="40"
+                                Width="120"
+                                FontSize="14"
+                                Click="BackToSearchMenu_Click"/>
                     </StackPanel>
-
-                    <Button Grid.Row="1" 
-                            x:Name="BackToSearchMenuButton"
-                            Content="← Назад" 
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
-                            Margin="0,0,0,10"
-                            Background="#FF4444"
-                            Foreground="White"
-                            Height="40"
-                            Width="120"
-                            FontSize="14"
-                            Click="BackToSearchMenu_Click"/>
                 </Grid>
 
             </StackPanel>

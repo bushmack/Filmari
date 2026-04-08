@@ -1,30 +1,36 @@
-﻿using filamri.Models;
-using filamri.Services;
+﻿using Microsoft.Web.WebView2.Core;
 using System;
+using System.Net.Http;
+using System.Net.WebSockets;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Threading;
 
 namespace filamri
 {
     public partial class WatchPartyWindow : Window
     {
-        private readonly ApiService _apiService = new();
-        private Timer? _syncTimer;
+        private readonly HttpClient _httpClient = new();
+        private ClientWebSocket? _webSocket;
+        private Timer? _pingTimer;
         private UserData _userData;
-        private WatchRoom? _currentRoom;
+        private string _roomId;
+        private string _videoUrl;
         private bool _isHost;
         private bool _isSyncing;
-        private string _videoPath;
-        private bool _isSeeking;
+        private bool _isPlaying = false;
+        private double _currentTime = 0;
 
-        public WatchPartyWindow(string videoPath, bool isHost, string roomId)
+        public WatchPartyWindow(string videoUrl, bool isHost, string roomId)
         {
             InitializeComponent();
-            _videoPath = videoPath;
+            _httpClient.BaseAddress = new Uri("http://localhost:8002");
+            _videoUrl = videoUrl;
             _isHost = isHost;
+            _roomId = roomId;
             _userData = LocalStorage.Load();
 
             RoomIdText.Text = $"ID комнаты: {roomId}";
@@ -34,144 +40,199 @@ namespace filamri
                 RoomInfoText.Text = "🎬 Вы создатель комнаты";
                 PartnerInfoText.Text = "⏳ Ожидание подключения партнера...";
                 LoadingText.Visibility = Visibility.Visible;
-                PlayIcon.Visibility = Visibility.Collapsed;
             }
             else
             {
                 RoomInfoText.Text = "🎬 Вы подключились к комнате";
                 PartnerInfoText.Text = "⏳ Ожидание начала просмотра...";
                 LoadingText.Visibility = Visibility.Visible;
-                PlayIcon.Visibility = Visibility.Visible;
             }
 
-            LoadVideo();
-            StartPolling();
+            InitializeWebView();
+            ConnectWebSocket();
         }
 
-        private void LoadVideo()
+        private async void ConnectWebSocket()
         {
             try
             {
-                VideoPlayer.Source = new Uri(_videoPath);
-                VideoPlayer.MediaOpened += (s, e) =>
+                _webSocket = new ClientWebSocket();
+                await _webSocket.ConnectAsync(new Uri($"ws://localhost:8002/ws/{_roomId}/{_userData.UserId}"), CancellationToken.None);
+
+                if (_webSocket.State == WebSocketState.Open)
                 {
-                    Dispatcher.Invoke(() =>
+                    Console.WriteLine("WebSocket connected!");
+                    _ = Task.Run(ReceiveMessages);
+
+                    _pingTimer = new Timer(async _ =>
                     {
-                        PositionSlider.Maximum = VideoPlayer.NaturalDuration.TimeSpan.TotalSeconds;
-                    });
-                };
+                        if (_webSocket?.State == WebSocketState.Open)
+                        {
+                            try
+                            {
+                                var pingMsg = JsonSerializer.Serialize(new { type = "ping" });
+                                var bytes = Encoding.UTF8.GetBytes(pingMsg);
+                                await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                            }
+                            catch { }
+                        }
+                    }, null, 30000, 30000);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка загрузки видео: {ex.Message}", "Ошибка",
-                    MessageBoxButton.OK, MessageBoxImage.Error);
+                Console.WriteLine($"WebSocket error: {ex.Message}");
+                MessageBox.Show($"Ошибка подключения: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        private void StartPolling()
+        private async Task ReceiveMessages()
         {
-            _syncTimer = new Timer(async _ =>
+            var buffer = new byte[8192];
+
+            while (_webSocket?.State == WebSocketState.Open)
             {
-                if (_currentRoom == null) return;
                 try
                 {
-                    var status = await _apiService.GetWatchRoomStatus(_currentRoom.RoomId);
-                    if (status != null)
+                    var result = await _webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+                    if (result.MessageType == WebSocketMessageType.Text)
                     {
-                        await Dispatcher.InvokeAsync(() => UpdateUI(status));
+                        var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
+                        Console.WriteLine($"Received: {message}");
+
+                        using var doc = JsonDocument.Parse(message);
+                        var root = doc.RootElement;
+                        var type = root.GetProperty("type").GetString();
+
+                        await Dispatcher.InvokeAsync(() =>
+                        {
+                            if (type == "init")
+                            {
+                                var isPlaying = root.GetProperty("isPlaying").GetBoolean();
+                                var currentTime = root.GetProperty("currentTime").GetDouble();
+                                _isPlaying = isPlaying;
+                                _currentTime = currentTime;
+                                PlayPauseButton.Content = isPlaying ? "⏸" : "▶";
+                                Console.WriteLine($"Init: isPlaying={isPlaying}, time={currentTime}");
+                            }
+                            else if (type == "sync")
+                            {
+                                var isPlaying = root.GetProperty("isPlaying").GetBoolean();
+                                var currentTime = root.GetProperty("currentTime").GetDouble();
+
+                                if (!_isSyncing)
+                                {
+                                    _isPlaying = isPlaying;
+                                    _currentTime = currentTime;
+                                    PlayPauseButton.Content = isPlaying ? "⏸" : "▶";
+                                    Console.WriteLine($"Sync: isPlaying={isPlaying}, time={currentTime}");
+                                }
+                            }
+                            else if (type == "guest_joined")
+                            {
+                                var guestName = root.GetProperty("guestName").GetString();
+                                PartnerInfoText.Text = $"👥 С кем: {guestName}";
+                                LoadingText.Visibility = Visibility.Collapsed;
+                                PlayIcon.Visibility = Visibility.Collapsed;
+                                Console.WriteLine($"Guest joined: {guestName}");
+                            }
+                            else if (type == "guest_left")
+                            {
+                                PartnerInfoText.Text = "⏳ Ожидание подключения партнера...";
+                                LoadingText.Visibility = Visibility.Visible;
+                                Console.WriteLine("Guest left");
+                            }
+                            else if (type == "chat")
+                            {
+                                var msg = root.GetProperty("message");
+                                var userName = msg.GetProperty("userName").GetString();
+                                var text = msg.GetProperty("text").GetString();
+                                var time = msg.GetProperty("time").GetString();
+                                AddMessageToChat(userName ?? "", text ?? "", time ?? "");
+                            }
+                            else if (type == "pong")
+                            {
+                                Console.WriteLine("Pong received");
+                            }
+                        });
                     }
                 }
-                catch { }
-            }, null, 0, 500);
-        }
-
-        private void UpdateUI(WatchRoom room)
-        {
-            _currentRoom = room;
-
-            if (!_isSyncing && !_isSeeking && room.CurrentPosition > 0)
-            {
-                if (Math.Abs(VideoPlayer.Position.TotalSeconds - room.CurrentPosition) > 1)
+                catch (Exception ex)
                 {
-                    VideoPlayer.Position = TimeSpan.FromSeconds(room.CurrentPosition);
-                    PositionSlider.Value = room.CurrentPosition;
+                    Console.WriteLine($"Receive error: {ex.Message}");
+                    break;
                 }
             }
+        }
 
-            if (room.IsPlaying && VideoPlayer.LoadedBehavior != MediaState.Play)
+        private void AddMessageToChat(string userName, string text, string time)
+        {
+            var messages = MessagesList.ItemsSource as System.Collections.ObjectModel.ObservableCollection<ChatMessageItem>;
+            if (messages == null)
             {
-                VideoPlayer.Play();
-                PlayIcon.Visibility = Visibility.Collapsed;
-                PlayPauseButton.Content = "⏸";
-            }
-            else if (!room.IsPlaying && VideoPlayer.LoadedBehavior != MediaState.Pause && VideoPlayer.LoadedBehavior != MediaState.Stop)
-            {
-                VideoPlayer.Pause();
-                PlayIcon.Visibility = Visibility.Visible;
-                PlayPauseButton.Content = "▶";
+                messages = new System.Collections.ObjectModel.ObservableCollection<ChatMessageItem>();
+                MessagesList.ItemsSource = messages;
             }
 
-            if (!string.IsNullOrEmpty(room.GuestId))
+            messages.Add(new ChatMessageItem
             {
-                PartnerInfoText.Text = $"👥 С кем: {room.GuestName}";
-                LoadingText.Visibility = Visibility.Collapsed;
-            }
+                UserName = userName,
+                Text = text,
+                Time = time
+            });
 
-            MessagesList.ItemsSource = null;
-            MessagesList.ItemsSource = room.Messages;
             MessagesScrollViewer.ScrollToBottom();
         }
 
-        private void VideoPlayer_MediaOpened(object sender, RoutedEventArgs e)
+        private async void InitializeWebView()
         {
-            PositionSlider.Maximum = VideoPlayer.NaturalDuration.TimeSpan.TotalSeconds;
+            await VideoWebView.EnsureCoreWebView2Async();
+
+            string html = $@"
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <style>
+                    body {{ margin: 0; padding: 0; background: #000; height: 100vh; overflow: hidden; }}
+                    iframe {{ width: 100%; height: 100%; border: none; }}
+                </style>
+            </head>
+            <body>
+                <iframe src='{_videoUrl}' allow='autoplay; fullscreen; picture-in-picture' 
+                        allowfullscreen='true'></iframe>
+            </body>
+            </html>";
+
+            VideoWebView.NavigateToString(html);
+            LoadingText.Visibility = Visibility.Collapsed;
+            PlayIcon.Visibility = Visibility.Collapsed;
         }
 
         private async void PlayPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_currentRoom == null) return;
-
-            bool newState = !_currentRoom.IsPlaying;
             _isSyncing = true;
+            _isPlaying = !_isPlaying;
+            PlayPauseButton.Content = _isPlaying ? "⏸" : "▶";
 
-            if (newState)
-                VideoPlayer.Play();
-            else
-                VideoPlayer.Pause();
-
-            await _apiService.SyncWatchState(_currentRoom.RoomId, VideoPlayer.Position.TotalSeconds, newState);
+            await SendSync();
             _isSyncing = false;
         }
 
-        private async void StopButton_Click(object sender, RoutedEventArgs e)
+        private async Task SendSync()
         {
-            if (_currentRoom == null) return;
+            if (_webSocket?.State != WebSocketState.Open) return;
 
-            _isSyncing = true;
-            VideoPlayer.Stop();
-            VideoPlayer.Position = TimeSpan.Zero;
-            PositionSlider.Value = 0;
+            var syncMsg = new
+            {
+                type = "sync",
+                isPlaying = _isPlaying,
+                currentTime = _currentTime
+            };
 
-            await _apiService.SyncWatchState(_currentRoom.RoomId, 0, false);
-            _isSyncing = false;
-        }
-
-        private void PositionSlider_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            _isSeeking = true;
-        }
-
-        private async void PositionSlider_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            if (_currentRoom == null) return;
-
-            double newPosition = PositionSlider.Value;
-            VideoPlayer.Position = TimeSpan.FromSeconds(newPosition);
-
-            _isSyncing = true;
-            await _apiService.SyncWatchState(_currentRoom.RoomId, newPosition, _currentRoom.IsPlaying);
-            _isSyncing = false;
-            _isSeeking = false;
+            var json = JsonSerializer.Serialize(syncMsg);
+            var bytes = Encoding.UTF8.GetBytes(json);
+            await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+            Console.WriteLine($"Sent sync: isPlaying={_isPlaying}, time={_currentTime}");
         }
 
         private async void SendButton_Click(object sender, RoutedEventArgs e)
@@ -187,36 +248,47 @@ namespace filamri
             }
         }
 
-        private async System.Threading.Tasks.Task SendMessage()
+        private async Task SendMessage()
         {
             string text = MessageTextBox.Text.Trim();
-            if (string.IsNullOrEmpty(text) || _currentRoom == null) return;
+            if (string.IsNullOrEmpty(text)) return;
 
-            await _apiService.SendWatchMessage(
-                _currentRoom.RoomId,
-                _userData.UserId,
-                _userData.UserName,
-                text);
+            var chatMsg = new
+            {
+                type = "chat",
+                userId = _userData.UserId,
+                userName = _userData.UserName,
+                text = text
+            };
 
+            var json = JsonSerializer.Serialize(chatMsg);
+            var bytes = Encoding.UTF8.GetBytes(json);
+            await _webSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
             MessageTextBox.Clear();
         }
 
         private async void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-            _syncTimer?.Dispose();
-            if (_currentRoom != null)
+            _pingTimer?.Dispose();
+            if (_webSocket != null)
             {
-                await _apiService.LeaveWatchRoom(_currentRoom.RoomId, _userData.UserId);
+                await _webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Closed", CancellationToken.None);
+                _webSocket.Dispose();
             }
-            VideoPlayer.Stop();
             Close();
         }
 
         protected override void OnClosed(EventArgs e)
         {
-            _syncTimer?.Dispose();
-            VideoPlayer.Stop();
+            _pingTimer?.Dispose();
             base.OnClosed(e);
         }
+    }
+
+    public class ChatMessageItem
+    {
+        public string UserName { get; set; } = "";
+        public string Text { get; set; } = "";
+        public string Time { get; set; } = "";
     }
 }

@@ -1,6 +1,7 @@
 ﻿<Window x:Class="filamri.WatchPartyWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         Title="🎬 Совместный просмотр" 
         Height="700" 
         Width="1100"
@@ -42,7 +43,7 @@
             <ColumnDefinition Width="300"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Левая часть: видео и управление -->
+        <!-- Левая часть: видео -->
         <Border Grid.Column="0" Background="#0F0F1F" Margin="5" CornerRadius="15">
             <Grid Margin="15">
                 <Grid.RowDefinitions>
@@ -51,7 +52,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Информация о комнате -->
                 <StackPanel Grid.Row="0" Margin="0,0,0,10">
                     <Border Background="#2A2A3E" CornerRadius="15" Padding="10,5">
                         <TextBlock x:Name="RoomInfoText" FontSize="12" Foreground="#A29BFE" HorizontalAlignment="Center"/>
@@ -64,19 +64,13 @@
                     </Border>
                 </StackPanel>
 
-                <!-- Видеоплеер -->
+                <!-- WebView2 для встраивания видео -->
                 <Border Grid.Row="1" Background="#2A2A3E" CornerRadius="20" BorderBrush="#6C5CE7" BorderThickness="2">
                     <Grid>
-                        <MediaElement x:Name="VideoPlayer" 
-                                      LoadedBehavior="Manual"
-                                      UnloadedBehavior="Stop"
-                                      ScrubbingEnabled="True"
-                                      MediaOpened="VideoPlayer_MediaOpened"/>
-
+                        <wv2:WebView2 x:Name="VideoWebView" />
                         <Viewbox x:Name="PlayIcon" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <TextBlock Text="▶" FontSize="80" Foreground="#6C5CE7" Opacity="0.9"/>
                         </Viewbox>
-
                         <TextBlock x:Name="LoadingText" Text="⏳ Ожидание партнера..." 
                                    FontSize="20" Foreground="#888888" 
                                    HorizontalAlignment="Center" VerticalAlignment="Center"
@@ -84,19 +78,11 @@
                     </Grid>
                 </Border>
 
-                <!-- Управление плеером -->
+                <!-- Управление -->
                 <StackPanel Grid.Row="2" Margin="0,15,0,0">
-                    <Slider x:Name="PositionSlider" Minimum="0" Maximum="100" Value="0" 
-                            Margin="0,0,0,10" 
-                            MouseLeftButtonUp="PositionSlider_MouseLeftButtonUp"
-                            PreviewMouseLeftButtonDown="PositionSlider_PreviewMouseLeftButtonDown"/>
-
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <Button x:Name="PlayPauseButton" Content="⏸" Width="60" Height="60" 
                                 FontSize="28" Background="#6C5CE7" Click="PlayPauseButton_Click"
-                                Style="{StaticResource NeonButton}" Margin="5"/>
-                        <Button x:Name="StopButton" Content="⏹" Width="60" Height="60" 
-                                FontSize="24" Background="#FF4444" Click="StopButton_Click"
                                 Style="{StaticResource NeonButton}" Margin="5"/>
                         <Button x:Name="ExitButton" Content="🚪 Выйти" Width="100" Height="60" 
                                 FontSize="16" Background="#FF6C5CE7" Click="ExitButton_Click"
@@ -114,28 +100,28 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
+                <TextBox x:Name="DebugConsole" 
+         Grid.Row="3" 
+         Height="100" 
+         Background="#1A1A2E" 
+         Foreground="#00FF00" 
+         FontFamily="Consolas" 
+         FontSize="10" 
+         VerticalScrollBarVisibility="Auto"
+         IsReadOnly="True"/>
 
                 <TextBlock Text="💬 ЧАТ" FontSize="18" FontWeight="Bold" Foreground="White" 
                            HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
-                <ScrollViewer Grid.Row="1" x:Name="MessagesScrollViewer" 
-                              VerticalScrollBarVisibility="Auto">
+                <ScrollViewer Grid.Row="1" x:Name="MessagesScrollViewer" VerticalScrollBarVisibility="Auto">
                     <ItemsControl x:Name="MessagesList">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <Border Margin="0,5" Padding="8" CornerRadius="10" 
-                                        Background="#1A1A2E">
+                                <Border Margin="0,5" Padding="8" CornerRadius="10" Background="#1A1A2E">
                                     <StackPanel>
-                                        <TextBlock Text="{Binding UserName}" 
-                                                   FontWeight="Bold" Foreground="#6C5CE7"
-                                                   FontSize="12"/>
-                                        <TextBlock Text="{Binding Text}" 
-                                                   Foreground="White" 
-                                                   TextWrapping="Wrap"
-                                                   FontSize="13"/>
-                                        <TextBlock Text="{Binding Time}" 
-                                                   FontSize="9" Foreground="#888888"
-                                                   HorizontalAlignment="Right"/>
+                                        <TextBlock Text="{Binding UserName}" FontWeight="Bold" Foreground="#6C5CE7" FontSize="12"/>
+                                        <TextBlock Text="{Binding Text}" Foreground="White" TextWrapping="Wrap" FontSize="13"/>
+                                        <TextBlock Text="{Binding Time}" FontSize="9" Foreground="#888888" HorizontalAlignment="Right"/>
                                     </StackPanel>
                                 </Border>
                             </DataTemplate>
@@ -157,6 +143,8 @@
                              BorderBrush="#6C5CE7"
                              BorderThickness="1"
                              KeyDown="MessageTextBox_KeyDown"/>
+                    
+                    
                     <Button x:Name="SendButton" 
                             Grid.Column="1"
                             Content="📨" 

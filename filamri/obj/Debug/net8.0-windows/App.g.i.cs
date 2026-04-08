@@ -58,7 +58,7 @@ namespace filamri {
             
             #line default
             #line hidden
-            System.Uri resourceLocater = new System.Uri("/Filamri;V1.0.0.0;component/app.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Filamri;component/app.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\App.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
