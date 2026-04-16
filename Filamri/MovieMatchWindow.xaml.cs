@@ -1,7 +1,4 @@
-﻿using filamri.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -20,12 +17,9 @@ namespace filamri
         public MovieMatchWindow()
         {
             InitializeComponent();
-            // ВАЖНО: WebSocket сервер на порту 8002!
-            _httpClient.BaseAddress = new Uri("http://192.168.133.7:8002");
+            _httpClient.BaseAddress = new Uri("http://localhost:8002");
             _userData = LocalStorage.Load();
         }
-
-        // ========== ГЛАВНОЕ МЕНЮ ==========
 
         private void WatchTogether_Click(object sender, RoutedEventArgs e)
         {
@@ -40,8 +34,6 @@ namespace filamri
             MainMenu.Visibility = Visibility.Collapsed;
             SearchTogetherGrid.Visibility = Visibility.Visible;
         }
-
-        // ========== РЕЖИМ "СМОТРЕТЬ ВМЕСТЕ" ==========
 
         private void CreateWatchRoom_Click(object sender, RoutedEventArgs e)
         {
@@ -73,44 +65,6 @@ namespace filamri
                     return $"https://www.youtube.com/embed/{match.Groups[1].Value}";
                 }
             }
-
-            // VK Video
-            if (url.Contains("vk.com/video") || url.Contains("vkvideo.ru"))
-            {
-                var regex = new Regex(@"(?:vk\.com\/video|vkvideo\.ru\/video)(-?\d+_\d+)");
-                var match = regex.Match(url);
-                if (match.Success)
-                {
-                    var parts = match.Groups[1].Value.Split('_');
-                    if (parts.Length == 2)
-                    {
-                        return $"https://vk.com/video_ext.php?oid={parts[0]}&id={parts[1]}&hash=";
-                    }
-                }
-            }
-
-            // RuTube
-            if (url.Contains("rutube.ru"))
-            {
-                var regex = new Regex(@"rutube\.ru\/video\/([a-f0-9]+)");
-                var match = regex.Match(url);
-                if (match.Success)
-                {
-                    return $"https://rutube.ru/play/embed/{match.Groups[1].Value}";
-                }
-            }
-
-            // Яндекс Видео
-            if (url.Contains("yandex.ru/video") || url.Contains("yandex.ru/efir"))
-            {
-                var regex = new Regex(@"yandex\.ru\/video\/preview\/(\d+)");
-                var match = regex.Match(url);
-                if (match.Success)
-                {
-                    return $"https://yandex.ru/video/preview/{match.Groups[1].Value}";
-                }
-            }
-
             return url;
         }
 
@@ -123,47 +77,34 @@ namespace filamri
             {
                 Mouse.OverrideCursor = Cursors.Wait;
 
-                string embedUrl = ExtractEmbedUrl(videoUrl);
-
-                if (string.IsNullOrEmpty(embedUrl))
-                {
-                    MessageBox.Show("Не удалось распознать ссылку. Поддерживаются YouTube, VK, RuTube, Яндекс Видео.",
-                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
-                    return;
-                }
-
-                var request = new { user_id = _userData.UserId, user_name = _userData.UserName, video_url = embedUrl };
+                // Отправляем оригинальную ссылку, сервер сам сконвертирует
+                var request = new { user_id = _userData.UserId, user_name = _userData.UserName, video_url = videoUrl };
                 var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-
-                // ИСПРАВЛЕНО: убираем /watch/ из пути
                 var response = await _httpClient.PostAsync("/api/create-room", content);
-
+                
                 Mouse.OverrideCursor = null;
 
                 if (response.IsSuccessStatusCode)
                 {
                     var json = await response.Content.ReadAsStringAsync();
-                    var result = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+                    using var doc = JsonDocument.Parse(json);
+                    var roomId = doc.RootElement.GetProperty("roomId").GetString();
+                    var embedUrl = doc.RootElement.GetProperty("videoUrl").GetString();
 
-                    if (result != null && result.ContainsKey("roomId"))
-                    {
-                        string roomId = result["roomId"].ToString();
+                    MessageBox.Show($"✅ Комната создана!\n\nID комнаты: {roomId}\n\n" +
+                                    $"Поделитесь этим ID с другом." +
+                                    $"{roomId}, {embedUrl}",
+                                    "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        MessageBox.Show($"✅ Комната создана!\n\nID комнаты: {roomId}\n\n" +
-                                        $"Поделитесь этим ID с другом.",
-                                        "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
-
-                        var watchWindow = new WatchPartyWindow(embedUrl, true, roomId);
-                        watchWindow.Owner = this;
-                        watchWindow.ShowDialog();
-                        Close();
-                    }
+                    var watchWindow = new WatchPartyWindow(embedUrl ?? videoUrl, true, roomId ?? "");
+                    watchWindow.Owner = this;
+                    watchWindow.ShowDialog();
+                    Close();
                 }
                 else
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"Ошибка создания комнаты: {response.StatusCode}\n{error}",
-                        "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show($"Ошибка создания комнаты: {error}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
@@ -172,7 +113,6 @@ namespace filamri
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
         private void WatchRoomIdTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             JoinWatchRoomButton.IsEnabled = !string.IsNullOrWhiteSpace(WatchRoomIdTextBox.Text);
@@ -185,14 +125,14 @@ namespace filamri
             try
             {
                 Mouse.OverrideCursor = Cursors.Wait;
+                JoinWatchRoomButton.IsEnabled = false;
 
                 var request = new { room_id = roomId, user_id = _userData.UserId, user_name = _userData.UserName };
                 var content = new StringContent(JsonSerializer.Serialize(request), Encoding.UTF8, "application/json");
-
-                // ИСПРАВЛЕНО: убираем /watch/ из пути
                 var response = await _httpClient.PostAsync("/api/join-room", content);
 
                 Mouse.OverrideCursor = null;
+                JoinWatchRoomButton.IsEnabled = true;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -206,7 +146,7 @@ namespace filamri
                         MessageBox.Show($"✅ Вы подключились к комнате {roomId}!\n\nСейчас начнется совместный просмотр.",
                             "Успех", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                        var watchWindow = new WatchPartyWindow(videoUrl, false, roomId);
+                        var watchWindow = new WatchPartyWindow("https://vkvideo.ru/video_ext.php?oid=-194145340&id=456240281&hash=50abc62ea9397f2f", false, roomId);
                         watchWindow.Owner = this;
                         watchWindow.ShowDialog();
                         Close();
@@ -219,13 +159,14 @@ namespace filamri
                 else
                 {
                     var error = await response.Content.ReadAsStringAsync();
-                    MessageBox.Show($"❌ Ошибка подключения: {response.StatusCode}\n{error}",
+                    MessageBox.Show($"❌ Ошибка подключения: {error}",
                         "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
                 Mouse.OverrideCursor = null;
+                JoinWatchRoomButton.IsEnabled = true;
                 MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
@@ -234,9 +175,8 @@ namespace filamri
         {
             WatchTogetherGrid.Visibility = Visibility.Collapsed;
             MainMenu.Visibility = Visibility.Visible;
+            VideoUrlTextBox.Text = "";
         }
-
-        // ========== РЕЖИМ "ИСКАТЬ ФИЛЬМ ВМЕСТЕ" (заглушка) ==========
 
         private void BackToSearchMenu_Click(object sender, RoutedEventArgs e)
         {
