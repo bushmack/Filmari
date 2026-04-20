@@ -2,34 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="🎬 Совместный просмотр" 
-        Height="850" 
-        Width="950"
+        Height="600" 
+        Width="900"
         WindowStartupLocation="CenterOwner"
         Background="#FF2D3436"
         WindowStyle="ToolWindow"
         ResizeMode="NoResize">
 
     <Window.Resources>
-        <Style x:Key="RoundedTextBox" TargetType="TextBox">
-            <Setter Property="Padding" Value="8"/>
-            <Setter Property="Background" Value="White"/>
-            <Setter Property="BorderBrush" Value="#6C5CE7"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TextBox">
-                        <Border Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                CornerRadius="10">
-                            <ScrollViewer x:Name="PART_ContentHost" Margin="2"/>
-                        </Border>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
         <Style x:Key="NeonButton" TargetType="Button">
             <Setter Property="Height" Value="60"/>
             <Setter Property="FontSize" Value="18"/>
@@ -72,190 +52,190 @@
     </Window.Resources>
 
     <Border Background="#CC2D3436" CornerRadius="30" Margin="20" Padding="25">
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel>
+        <StackPanel>
 
-                <TextBlock Text="🎬 Совместный просмотр" 
-                           FontSize="32" 
-                           FontWeight="Bold" 
-                           HorizontalAlignment="Center" 
-                           Margin="0,0,0,25"
-                           Foreground="White"/>
+            <TextBlock Text="🎬 Совместный просмотр" 
+                       FontSize="32" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       Margin="0,0,0,25"
+                       Foreground="White"/>
 
-                <!-- ГЛАВНОЕ МЕНЮ -->
-                <Grid x:Name="MainMenu">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            <!-- ГЛАВНОЕ МЕНЮ -->
+            <Grid x:Name="MainMenu">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <Button Grid.Row="0" 
-                            x:Name="WatchTogetherButton"
-                            Content="🎥 Смотреть вместе" 
-                            Background="#00B894"
-                            Style="{StaticResource NeonButton}"
-                            Margin="50,0,50,20"
-                            Click="WatchTogether_Click"/>
+                <Button Grid.Row="0" 
+                        x:Name="WatchTogetherButton"
+                        Content="🎥 Смотреть вместе" 
+                        Background="#00B894"
+                        Style="{StaticResource NeonButton}"
+                        Margin="50,0,50,20"
+                        Click="WatchTogether_Click"/>
 
-                    <Button Grid.Row="1" 
-                            x:Name="SearchTogetherButton"
-                            Content="🔍 Искать фильм вместе" 
-                            Background="#6C5CE7"
-                            Style="{StaticResource NeonButton}"
-                            Margin="50,20,50,0"
-                            Click="SearchTogether_Click"/>
-                </Grid>
+                <Button Grid.Row="1" 
+                        x:Name="SearchTogetherButton"
+                        Content="🔍 Искать фильм вместе" 
+                        Background="#6C5CE7"
+                        Style="{StaticResource NeonButton}"
+                        Margin="50,20,50,0"
+                        Click="SearchTogether_Click"/>
+            </Grid>
 
-                <!-- РЕЖИМ "СМОТРЕТЬ ВМЕСТЕ" -->
-                <Grid x:Name="WatchTogetherGrid" Visibility="Collapsed">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+            <!-- РЕЖИМ "СМОТРЕТЬ ВМЕСТЕ" -->
+            <Grid x:Name="WatchTogetherGrid" Visibility="Collapsed">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                        <TextBlock Text="🎥 Смотреть вместе" 
-                                   FontSize="24" 
+                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                    <TextBlock Text="🎥 Смотреть вместе" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" 
+                                x:Name="CreateWatchRoomButton"
+                                Content="➕ Создать комнату" 
+                                Background="#00B894"
+                                Style="{StaticResource SmallButton}"
+                                Margin="10,0,5,0"
+                                Click="CreateWatchRoom_Click"/>
+
+                        <Button Grid.Column="1" 
+                                x:Name="ShowJoinWatchRoomButton"
+                                Content="🔗 Подключиться" 
+                                Background="#6C5CE7"
+                                Style="{StaticResource SmallButton}"
+                                Margin="5,0,10,0"
+                                Click="ShowJoinWatchRoom_Click"/>
+                    </Grid>
+                </StackPanel>
+
+                <!-- Панель создания комнаты -->
+                <Grid x:Name="CreateWatchRoomPanel" Grid.Row="1" Visibility="Visible">
+                    <StackPanel VerticalAlignment="Center" Margin="50">
+                        <TextBlock Text="🔗 Введите ссылку на видео" 
+                                   FontSize="18" 
                                    FontWeight="Bold" 
                                    Foreground="White"
                                    HorizontalAlignment="Center"
                                    Margin="0,0,0,20"/>
 
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="*"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Button Grid.Column="0" 
-                                    x:Name="CreateWatchRoomButton"
-                                    Content="➕ Создать комнату" 
-                                    Background="#00B894"
-                                    Style="{StaticResource SmallButton}"
-                                    Margin="10,0,5,0"
-                                    Click="CreateWatchRoom_Click"/>
-
-                            <Button Grid.Column="1" 
-                                    x:Name="ShowJoinWatchRoomButton"
-                                    Content="🔗 Подключиться" 
-                                    Background="#6C5CE7"
-                                    Style="{StaticResource SmallButton}"
-                                    Margin="5,0,10,0"
-                                    Click="ShowJoinWatchRoom_Click"/>
-                        </Grid>
-                    </StackPanel>
-
-                    <!-- Панель создания комнаты -->
-                    <Grid x:Name="CreateWatchRoomPanel" Grid.Row="1" Visibility="Visible">
-                        <StackPanel VerticalAlignment="Center" Margin="50">
-                            <TextBlock Text="🔗 Введите ссылку на видео" 
-                                       FontSize="18" 
-                                       FontWeight="Bold" 
-                                       Foreground="White"
-                                       HorizontalAlignment="Center"
-                                       Margin="0,0,0,20"/>
-
-                            <TextBox x:Name="VideoUrlTextBox" 
-                                     Height="45"
-                                     Margin="0,0,0,15"
-                                     Padding="15"
-                                     FontSize="14"
-                                     Background="White"
-                                     Foreground="Black"
-                                     BorderBrush="#6C5CE7"
-                                     BorderThickness="2"
-                                     TextChanged="VideoUrlTextBox_TextChanged"/>
-
-                            <TextBlock Text="Поддерживаются: YouTube, VK Video, RuTube"
-                                       FontSize="11"
-                                       Foreground="#888888"
-                                       HorizontalAlignment="Center"
-                                       Margin="0,0,0,20"
-                                       TextWrapping="Wrap"/>
-
-                            <Button x:Name="CreateRoomFromUrlButton" 
-                                    Content="🎬 Создать комнату" 
-                                    Height="50"
-                                    Width="250"
-                                    Background="#00B894"
-                                    Style="{StaticResource SmallButton}"
-                                    HorizontalAlignment="Center"
-                                    IsEnabled="False"
-                                    Click="CreateRoomFromUrl_Click"/>
-                        </StackPanel>
-                    </Grid>
-
-                    <!-- Панель подключения -->
-                    <StackPanel x:Name="JoinWatchRoomPanel" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Center">
-                        <TextBlock Text="🔗 Введите ID комнаты" 
-                                   FontSize="16" 
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,20"/>
-
-                        <TextBox x:Name="WatchRoomIdTextBox" 
+                        <TextBox x:Name="VideoUrlTextBox" 
                                  Height="45"
-                                 Margin="50,0,50,15"
+                                 Margin="0,0,0,15"
                                  Padding="15"
                                  FontSize="14"
                                  Background="White"
                                  Foreground="Black"
                                  BorderBrush="#6C5CE7"
                                  BorderThickness="2"
-                                 TextChanged="WatchRoomIdTextBox_TextChanged"/>
+                                 TextChanged="VideoUrlTextBox_TextChanged"/>
 
-                        <Button x:Name="JoinWatchRoomButton" 
-                                Content="🔗 Подключиться" 
-                                Height="45"
-                                Width="200"
+                        <TextBlock Text="Поддерживаются: VK Video, YouTube, RuTube"
+                                   FontSize="11"
+                                   Foreground="#888888"
+                                   HorizontalAlignment="Center"
+                                   Margin="0,0,0,20"
+                                   TextWrapping="Wrap"/>
+
+                        <Button x:Name="CreateRoomFromUrlButton" 
+                                Content="🎬 Создать комнату" 
+                                Height="50"
+                                Width="250"
                                 Background="#00B894"
                                 Style="{StaticResource SmallButton}"
                                 HorizontalAlignment="Center"
                                 IsEnabled="False"
-                                Click="JoinWatchRoom_Click"/>
+                                Click="CreateRoomFromUrl_Click"/>
                     </StackPanel>
+                </Grid>
 
-                    <Button Grid.Row="1" 
-                            x:Name="BackToWatchMenuButton"
+                <!-- Панель подключения -->
+                <StackPanel x:Name="JoinWatchRoomPanel" Grid.Row="1" Visibility="Collapsed" VerticalAlignment="Center">
+                    <TextBlock Text="🔗 Введите ID комнаты" 
+                               FontSize="16" 
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+
+                    <TextBox x:Name="WatchRoomIdTextBox" 
+                             Height="45"
+                             Margin="50,0,50,15"
+                             Padding="15"
+                             FontSize="14"
+                             Background="White"
+                             Foreground="Black"
+                             BorderBrush="#6C5CE7"
+                             BorderThickness="2"
+                             TextChanged="WatchRoomIdTextBox_TextChanged"/>
+
+                    <Button x:Name="JoinWatchRoomButton" 
+                            Content="🔗 Подключиться" 
+                            Height="45"
+                            Width="200"
+                            Background="#00B894"
+                            Style="{StaticResource SmallButton}"
+                            HorizontalAlignment="Center"
+                            IsEnabled="False"
+                            Click="JoinWatchRoom_Click"/>
+                </StackPanel>
+
+                <Button Grid.Row="1" 
+                        x:Name="BackToWatchMenuButton"
+                        Content="← Назад" 
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,0,10"
+                        Background="#FF4444"
+                        Foreground="White"
+                        Height="40"
+                        Width="120"
+                        FontSize="14"
+                        Click="BackToWatchMenu_Click"/>
+            </Grid>
+
+            <!-- РЕЖИМ "ИСКАТЬ ФИЛЬМ ВМЕСТЕ" (заглушка) -->
+            <Grid x:Name="SearchTogetherGrid" Visibility="Collapsed">
+                <StackPanel VerticalAlignment="Center" Margin="50">
+                    <TextBlock Text="🔍 Искать фильм вместе" 
+                               FontSize="24" 
+                               FontWeight="Bold" 
+                               Foreground="White"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+
+                    <TextBlock Text="Функция в разработке" 
+                               FontSize="16" 
+                               Foreground="#888888"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,20"/>
+
+                    <Button x:Name="BackToSearchMenuButton"
                             Content="← Назад" 
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
-                            Margin="0,0,0,10"
+                            HorizontalAlignment="Center"
                             Background="#FF4444"
                             Foreground="White"
                             Height="40"
                             Width="120"
                             FontSize="14"
-                            Click="BackToWatchMenu_Click"/>
-                </Grid>
+                            Click="BackToSearchMenu_Click"/>
+                </StackPanel>
+            </Grid>
 
-                <!-- РЕЖИМ "ИСКАТЬ ФИЛЬМ ВМЕСТЕ" (заглушка) -->
-                <Grid x:Name="SearchTogetherGrid" Visibility="Collapsed">
-                    <StackPanel>
-                        <TextBlock Text="🔍 Поиск фильмов вместе" 
-                                   FontSize="24" 
-                                   FontWeight="Bold" 
-                                   Foreground="White"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,0,0,20"/>
-                        <TextBlock Text="Функция в разработке..." 
-                                   FontSize="16" 
-                                   Foreground="#888888"
-                                   HorizontalAlignment="Center"
-                                   Margin="0,50,0,50"/>
-                        <Button x:Name="BackToSearchMenuButton"
-                                Content="← Назад" 
-                                HorizontalAlignment="Center"
-                                Background="#FF4444"
-                                Foreground="White"
-                                Height="40"
-                                Width="120"
-                                FontSize="14"
-                                Click="BackToSearchMenu_Click"/>
-                    </StackPanel>
-                </Grid>
-
-            </StackPanel>
-        </ScrollViewer>
+        </StackPanel>
     </Border>
 </Window>

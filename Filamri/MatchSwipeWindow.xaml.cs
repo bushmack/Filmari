@@ -40,7 +40,7 @@ namespace filamri
             {
                 try
                 {
-                    var response = await _httpClient.GetAsync($"http://localhost:8001/api/match/room-status/{_roomId}");
+                    var response = await _httpClient.GetAsync($"http://192.168.133.7:8001/api/match/room-status/{_roomId}");
                     if (response.IsSuccessStatusCode)
                     {
                         var json = await response.Content.ReadAsStringAsync();
@@ -189,7 +189,7 @@ namespace filamri
                 };
 
                 var content = new StringContent(JsonSerializer.Serialize(request), System.Text.Encoding.UTF8, "application/json");
-                var response = await _httpClient.PostAsync("http://localhost:8001/api/match/swipe", content);
+                var response = await _httpClient.PostAsync("http://193.168.133.7:8001/api/match/swipe", content);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -268,7 +268,7 @@ namespace filamri
             _statusTimer?.Dispose();
             try
             {
-                await _httpClient.DeleteAsync($"http://localhost:8001/api/match/leave-room/{_roomId}/{_userId}");
+                await _httpClient.DeleteAsync($"http://192.168.133.7:8001/api/match/leave-room/{_roomId}/{_userId}");
             }
             catch { }
             Close();

@@ -52,7 +52,6 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <!-- Информация о комнате -->
                 <StackPanel Grid.Row="0" Margin="0,0,0,10">
                     <Border Background="#2A2A3E" CornerRadius="15" Padding="10,5">
                         <TextBlock x:Name="RoomInfoText" FontSize="12" Foreground="#A29BFE" HorizontalAlignment="Center"/>
@@ -70,16 +69,15 @@
                     <wv2:WebView2 x:Name="VideoWebView" />
                 </Border>
 
-                <!-- Управление -->
+                <!-- Управление видео -->
                 <StackPanel Grid.Row="2" Margin="0,15,0,0">
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                        <Button x:Name="PlayPauseButton" Content="⏸" Width="70" Height="55" 
-                                FontSize="24" Background="#6C5CE7"
-                                Style="{StaticResource NeonButton}" Margin="5"/>
-                        <Button x:Name="ExitButton" Content="🚪 Выйти" Width="120" Height="55" 
-                                FontSize="16" Background="#FF4444" Click="ExitButton_Click"
-                                Style="{StaticResource NeonButton}" Margin="5"/>
-                    </StackPanel>
+                    <Slider x:Name="SeekSlider" 
+                            Minimum="0" 
+                            Maximum="100" 
+                            Value="0" 
+                            Margin="0,0,0,10"
+                            Visibility="Visible"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
                 </StackPanel>
             </Grid>
         </Border>

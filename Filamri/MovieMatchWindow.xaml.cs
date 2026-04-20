@@ -17,7 +17,7 @@ namespace filamri
         public MovieMatchWindow()
         {
             InitializeComponent();
-            _httpClient.BaseAddress = new Uri("http://localhost:8002");
+            _httpClient.BaseAddress = new Uri("http://192.168.133.7:8002");
             _userData = LocalStorage.Load();
         }
 
